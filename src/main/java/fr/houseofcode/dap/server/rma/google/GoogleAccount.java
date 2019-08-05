@@ -33,17 +33,17 @@ public class GoogleAccount {
     /**
      * @return access to constant LOG.
      */
-    private static final Logger LOG = LogManager.getLogger();
+    private static  Logger LOG = LogManager.getLogger();
 
     /**
      * @return constant first char of userKey.
      */
-    private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
+    private static  int SENSIBLE_DATA_FIRST_CHAR = 0;
 
     /**
      * @return constant last char of userKey.
      */
-    private static final int SENSIBLE_DATA_LAST_CHAR = 5;
+    private static  int SENSIBLE_DATA_LAST_CHAR = 5;
 
     /**
      * Add a Google account (user will be prompt to connect and accept required
@@ -57,8 +57,8 @@ public class GoogleAccount {
      */
 
     @RequestMapping("/account/add/{userKey}")
-    public String addAccount(@PathVariable final String userKey,
-            final HttpServletRequest request, final HttpSession session)
+    public String addAccount(@PathVariable String userKey,
+             HttpServletRequest request,  HttpSession session)
                     throws ServletException, GeneralSecurityException {
 
         String response = "errorOccurs";
@@ -71,7 +71,7 @@ public class GoogleAccount {
                 response = "AccountAlreadyAdded";
             } else {
                 // redirect to the authorization flow
-                final AuthorizationCodeRequestUrl authorizationUrl =
+                 AuthorizationCodeRequestUrl authorizationUrl =
                         flow.newAuthorizationUrl();
                 authorizationUrl.setRedirectUri(buildRedirectUri(request,
                         "/oAuth2Callback"));
@@ -99,20 +99,20 @@ public class GoogleAccount {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/oAuth2Callback")
-    public String oAuthCallback(@RequestParam final String code,
-            final HttpServletRequest request, final HttpSession session)
+    public String oAuthCallback(@RequestParam  String code,
+             HttpServletRequest request,  HttpSession session)
                     throws ServletException, GeneralSecurityException {
-        final String decodedCode = extracCode(request);
+         String decodedCode = extracCode(request);
 
-        final String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
+         String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
 
-        final String userKey = getuserKey(session);
+         String userKey = getuserKey(session);
         try {
-            final GoogleAuthorizationCodeFlow flow = Utils.getFlow();
-            final TokenResponse response = flow.newTokenRequest(decodedCode)
+             GoogleAuthorizationCodeFlow flow = Utils.getFlow();
+             TokenResponse response = flow.newTokenRequest(decodedCode)
                     .setRedirectUri(redirectUri).execute();
 
-            final Credential credential =
+             Credential credential =
                     flow.createAndStoreCredential(response, userKey);
             if (null == credential || null == credential.getAccessToken()) {
                 LOG.warn("Trying to store a NULL AccessToken for user : "
@@ -144,7 +144,7 @@ public class GoogleAccount {
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
-    private String getuserKey(final HttpSession session)
+    private String getuserKey( HttpSession session)
             throws ServletException {
         String userKey = null;
         if (null != session && null != session.getAttribute("userKey")) {
@@ -166,15 +166,15 @@ public class GoogleAccount {
      * @return the decoded code
      * @throws ServletException if the code cannot be decoded
      */
-    private String extracCode(final HttpServletRequest request)
+    private String extracCode( HttpServletRequest request)
             throws ServletException {
-        final StringBuffer buf = request.getRequestURL();
+         StringBuffer buf = request.getRequestURL();
         if (null != request.getQueryString()) {
             buf.append('?').append(request.getQueryString());
         }
-        final AuthorizationCodeResponseUrl responseUrl =
+         AuthorizationCodeResponseUrl responseUrl =
                 new AuthorizationCodeResponseUrl(buf.toString());
-        final String decodeCode = responseUrl.getCode();
+         String decodeCode = responseUrl.getCode();
 
         if (decodeCode == null) {
             throw new MissingServletRequestParameterException("code", "String");
@@ -198,9 +198,9 @@ public class GoogleAccount {
      * @param destination the "path" to the resource
      * @return an absolute URI
      */
-    protected String buildRedirectUri(final HttpServletRequest req,
-            final String destination) {
-        final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
+    protected String buildRedirectUri( HttpServletRequest req,
+             String destination) {
+         GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
         return url.build();
     }

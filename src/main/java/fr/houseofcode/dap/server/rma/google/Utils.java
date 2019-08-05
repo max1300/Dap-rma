@@ -2,7 +2,9 @@ package fr.houseofcode.dap.server.rma.google;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
@@ -39,6 +41,7 @@ public class Utils{
      */
     private static final String TOKENS_DIRECTORY_PATH =
             System.getProperty("user.home") + "\\Dap\\tokens";
+//    private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**
      * method getJsonFactory().
@@ -47,6 +50,11 @@ public class Utils{
     public static JsonFactory getJsonFactory() {
         return JSON_FACTORY;
     }
+
+//    /**
+//     * String CREDENTIALS_FILE_PATH.
+//     */
+//    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
      * Global instance of the scopes required by this quickstart.
@@ -68,10 +76,16 @@ public class Utils{
         File appClientSecretFile = new File(System.getProperty("user.home")
                 + "\\Dap\\credentials.json");
 
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets
+       GoogleClientSecrets clientSecrets = GoogleClientSecrets
                 .load(JSON_FACTORY,
                 new InputStreamReader(new FileInputStream(
-                        appClientSecretFile), Charset.forName("UTF-8")));
+                      appClientSecretFile), Charset.forName("UTF-8")));
+
+//        InputStream in = GmailService.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+//        if (in == null) {
+//            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+//        }
+//        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         return clientSecrets;
     }
@@ -106,7 +120,7 @@ public class Utils{
                 loadClientSecret(), SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(
                 new java.io.File(TOKENS_DIRECTORY_PATH)))
-                .setAccessType("offline").build();
+                .setAccessType("online").build();
 
         return flow;
 

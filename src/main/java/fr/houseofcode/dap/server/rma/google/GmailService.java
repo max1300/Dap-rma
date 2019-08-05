@@ -25,17 +25,17 @@ import com.google.api.services.gmail.model.Message;
  */
 
 @Service
-public final class GmailService {
+public  class GmailService {
 
     /**
      * @return access to constant LOG.
      */
-    private static final Logger LOG = LogManager.getLogger();
+    private static  Logger LOG = LogManager.getLogger();
 
     /**
      * @return the internal APPLICATION_NAME.
      */
-    private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
+    private static  String APPLICATION_NAME = "Gmail API Java Quickstart";
 
     /**
      * @return access to constant APPLICATION_NAME.
@@ -51,9 +51,9 @@ public final class GmailService {
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
-    private Gmail getGmailService(final String userKey)
+    private Gmail getGmailService( String userKey)
             throws GeneralSecurityException, IOException {
-        final NetHttpTransport hTTPTRANSPORT =
+         NetHttpTransport hTTPTRANSPORT =
                 GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(hTTPTRANSPORT,
                 Utils.getJsonFactory(), Utils.getCredentials(userKey))
@@ -69,7 +69,7 @@ public final class GmailService {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/labels")
-    public String getLabels(final String userKey)
+    public String getLabels( String userKey)
             throws IOException, GeneralSecurityException {
         LOG.debug(
                 "recuperation des labels avec déclenchement "
@@ -103,7 +103,7 @@ public final class GmailService {
      * @throws GeneralSecurityException exception
      */
 
-    public int getNbUnreadEmail(final String userKey)
+    public int getNbUnreadEmail( String userKey)
             throws IOException, GeneralSecurityException {
 
         ListMessagesResponse response = getGmailService(userKey)

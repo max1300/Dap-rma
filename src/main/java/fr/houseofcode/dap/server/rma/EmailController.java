@@ -31,7 +31,7 @@ public class EmailController {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/email/nbUnread")
-    public Integer displayNbUnreadEmail(@RequestParam final String userKey)
+    public Integer displayNbUnreadEmail(@RequestParam String userKey)
             throws IOException, GeneralSecurityException {
 
         return gmailService.getNbUnreadEmail(userKey);
@@ -45,7 +45,7 @@ public class EmailController {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/label/print")
-    public String displayLabel(@RequestParam final String userKey)
+    public String displayLabel(@RequestParam String userKey)
             throws IOException, GeneralSecurityException {
         return gmailService.getLabels(userKey);
 

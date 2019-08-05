@@ -36,7 +36,7 @@ public class UserController {
      * @param name as name of new user
      */
     @RequestMapping("user/add")
-    public void addUser(@RequestParam final String name) {
+    public void addUser(@RequestParam  String name) {
         AppUser entity = new AppUser();
         entity.setName(name);
 

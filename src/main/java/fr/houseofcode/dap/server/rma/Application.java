@@ -22,7 +22,7 @@ public class Application {
      * @param args accept arguments of method main.
      * @since 1.0
      */
-    public static void main(final String[] args) {
+    public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Application.class);
 
         app.run(args);
@@ -35,7 +35,7 @@ public class Application {
      * @return an object from Spring
      */
     @Bean
-    public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
 
             System.out.println("Let's inspect the beans +"

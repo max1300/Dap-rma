@@ -31,7 +31,7 @@ public class EventController {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/event/next")
-    public String displayNextEvent(@RequestParam final String userKey)
+    public String displayNextEvent(@RequestParam String userKey)
             throws IOException, GeneralSecurityException {
 
         return calendarService.getNextEvent(userKey);

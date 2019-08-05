@@ -14,14 +14,14 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 /**
- * final class of CalendarService.
+ *  class of CalendarService.
  */
 
 @Service
-public final class CalendarService {
+public  class CalendarService {
 
     /**the internal APPLICATION_NAME.*/
-    private static final String APPLICATION_NAME =
+    private static  String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
 
     /**
@@ -38,9 +38,9 @@ public final class CalendarService {
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
-    private static Calendar getCalendarService(final String userKey)
+    private static Calendar getCalendarService( String userKey)
             throws GeneralSecurityException, IOException {
-        final NetHttpTransport hTTPTRANSPORT =
+         NetHttpTransport hTTPTRANSPORT =
                 GoogleNetHttpTransport.newTrustedTransport();
 
         Calendar service = new Calendar.Builder(hTTPTRANSPORT,
@@ -58,7 +58,7 @@ public final class CalendarService {
      * @throws GeneralSecurityException exception
      */
 
-    public String getNextEvent(final String userKey)
+    public String getNextEvent( String userKey)
             throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
 
