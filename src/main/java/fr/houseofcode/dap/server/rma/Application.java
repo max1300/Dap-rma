@@ -16,18 +16,30 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
+    /**
+     * main that call Spring.
+     * Objective is to run the server
+     * @param args accept arguments of method main.
+     * @since 1.0
+     */
+    public static void main(final String[] args) {
         SpringApplication app = new SpringApplication(Application.class);
 
         app.run(args);
 
     }
 
+    /**
+     * Bean from Spring boot.
+     * @param ctx from Spring
+     * @return an object from Spring
+     */
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+    public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
         return args -> {
 
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
+            System.out.println("Let's inspect the beans +"
+                    + "provided by Spring Boot:");
 
             String[] beanNames = ctx.getBeanDefinitionNames();
             Arrays.sort(beanNames);

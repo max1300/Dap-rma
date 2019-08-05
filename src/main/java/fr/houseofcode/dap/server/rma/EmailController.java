@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.houseofcode.dap.server.rma;
 
 import java.io.IOException;
@@ -14,23 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.houseofcode.dap.server.rma.google.GmailService;
 
 /**
- * @author houseofcode
- *
+ * @author rma.
+ * 5 august. 2019
  */
 @RestController
 public class EmailController {
 
     /**
-     * attribut.
+     * object GmailService.
      */
     @Autowired
     private GmailService gmailService;
 
     /**
-     * nbemail.
-     * @return nbemail
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * number of unread email on mailbox.
+     * @return number of unread email
+     * @param userKey accept name of person who use the application
+     * @throws IOException exception
+     * @throws GeneralSecurityException exception
      */
     @RequestMapping("/email/nbUnread")
     public Integer displayNbUnreadEmail(@RequestParam final String userKey)
@@ -40,8 +38,15 @@ public class EmailController {
 
     }
 
+    /**
+     * @return label from mailbox.
+     * @param userKey accept name of person who use the application
+     * @throws IOException exception
+     * @throws GeneralSecurityException exception
+     */
     @RequestMapping("/label/print")
-    public String displayLabel(@RequestParam final String userKey) throws IOException, GeneralSecurityException {
+    public String displayLabel(@RequestParam final String userKey)
+            throws IOException, GeneralSecurityException {
         return gmailService.getLabels(userKey);
 
     }

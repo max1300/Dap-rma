@@ -21,7 +21,8 @@ import com.google.api.services.calendar.model.Events;
 public final class CalendarService {
 
     /**the internal APPLICATION_NAME.*/
-    private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
+    private static final String APPLICATION_NAME =
+            "Google Calendar API Java Quickstart";
 
     /**
      * constant APPLICATION_NAME.
@@ -33,30 +34,40 @@ public final class CalendarService {
 
     /**
      * @return a list of service.
+     * @param userKey accept name of person who use the application
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
-    private static Calendar getCalendarService(String userKey) throws GeneralSecurityException, IOException {
-        final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Calendar service = new Calendar.Builder(hTTPTRANSPORT, Utils.getJsonFactory(), Utils.getCredentials(userKey))
-                .setApplicationName(CalendarService.getApplicationName()).build();
+    private static Calendar getCalendarService(final String userKey)
+            throws GeneralSecurityException, IOException {
+        final NetHttpTransport hTTPTRANSPORT =
+                GoogleNetHttpTransport.newTrustedTransport();
+
+        Calendar service = new Calendar.Builder(hTTPTRANSPORT,
+                Utils.getJsonFactory(), Utils.getCredentials(userKey))
+                .setApplicationName(CalendarService.getApplicationName())
+                .build();
         return service;
 
     }
 
     /**
-     * @return a String who contains the nextEvent
+     * @return a String who contains the nextEvent.
+     * @param userKey accept name of person who use the application
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
 
-    public String getNextEvent(String userKey) throws IOException, GeneralSecurityException {
+    public String getNextEvent(final String userKey)
+            throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
 
         String str = "No upcoming events found.";
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = getCalendarService(userKey).events().list("primary").setMaxResults(1).setTimeMin(now)
+        Events events = getCalendarService(userKey).events()
+                .list("primary").setMaxResults(1).setTimeMin(now)
                 .setOrderBy("startTime").setSingleEvents(true).execute();
+
         List<Event> items = events.getItems();
         if (!items.isEmpty()) {
             for (Event event : items) {
@@ -65,7 +76,8 @@ public final class CalendarService {
                 if (start == null) {
                     start = event.getStart().getDate();
                 }
-                str = "Evenement à venir =" + " " + event.getSummary() + " pour le : " + start;
+                str = "Evenement à venir =" + " "
+                + event.getSummary() + " pour le : " + start;
             }
 
         }

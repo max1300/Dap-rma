@@ -27,12 +27,14 @@ import com.google.api.services.gmail.model.Message;
 @Service
 public final class GmailService {
 
+    /**
+     * @return access to constant LOG.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
      * @return the internal APPLICATION_NAME.
      */
-
     private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
 
     /**
@@ -44,13 +46,17 @@ public final class GmailService {
 
     /**
      * secure connection to GmailService.
-     * @return a instance of Gmail.
+     * @return a instance of Gmail
+     * @param userKey accept name of person who use the application
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
-    private Gmail getGmailService(String userKey) throws GeneralSecurityException, IOException {
-        final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = new Gmail.Builder(hTTPTRANSPORT, Utils.getJsonFactory(), Utils.getCredentials(userKey))
+    private Gmail getGmailService(final String userKey)
+            throws GeneralSecurityException, IOException {
+        final NetHttpTransport hTTPTRANSPORT =
+                GoogleNetHttpTransport.newTrustedTransport();
+        Gmail service = new Gmail.Builder(hTTPTRANSPORT,
+                Utils.getJsonFactory(), Utils.getCredentials(userKey))
                 .setApplicationName(GmailService.getApplicationName()).build();
         return service;
     }
@@ -63,11 +69,16 @@ public final class GmailService {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/labels")
-    public String getLabels(String userKey) throws IOException, GeneralSecurityException {
+    public String getLabels(final String userKey)
+            throws IOException, GeneralSecurityException {
         LOG.debug(
-                "recuperation des labels avec déclenchement possible d'exceptions (IOException ou GeneralSecurityException");
+                "recuperation des labels avec déclenchement "
+                + "possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
+
         String str = "";
-        ListLabelsResponse listResponse = getGmailService(userKey).users().labels().list("me").execute();
+        ListLabelsResponse listResponse = getGmailService(userKey)
+                .users().labels().list("me").execute();
         List<Label> labels = listResponse.getLabels();
 
         if (labels.isEmpty()) {
@@ -86,16 +97,17 @@ public final class GmailService {
     }
 
     /**
-     * @param userKey String return the user
-     * @param query String
+     * @param userKey String return the user.
      * @return number of unread email
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
 
-    public int getNbUnreadEmail(String userKey) throws IOException, GeneralSecurityException {
+    public int getNbUnreadEmail(final String userKey)
+            throws IOException, GeneralSecurityException {
 
-        ListMessagesResponse response = getGmailService(userKey).users().messages().list("me").setQ("is:unread")
+        ListMessagesResponse response = getGmailService(userKey)
+                .users().messages().list("me").setQ("is:unread")
                 .execute();
 
         List<Message> messages = new ArrayList<Message>();
@@ -106,7 +118,8 @@ public final class GmailService {
             if (response.getNextPageToken() != null) {
 
                 String pageToken = response.getNextPageToken();
-                response = getGmailService(userKey).users().messages().list("me").setQ("is:unread")
+                response = getGmailService(userKey)
+                        .users().messages().list("me").setQ("is:unread")
                         .setPageToken(pageToken).execute();
 
             } else {

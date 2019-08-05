@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.houseofcode.dap.server.rma.data;
 
 import javax.persistence.Entity;
@@ -8,20 +5,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * @author houseofcode
- *
+ * @author rma.
+ * 5 august. 2019
  */
 @Entity
 public class AppUser {
 
+    /**
+     * Attribute id of database.
+     */
     @Id
     @GeneratedValue
     private Integer id;
 
+    /**
+     * Attribute name of database.
+     */
     private String name;
 
-    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser")
-    //    private List<GoogleAccount> googleAccounts;
+
 
     /**
      * @return the id
