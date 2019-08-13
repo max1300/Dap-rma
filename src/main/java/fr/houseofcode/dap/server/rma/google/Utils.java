@@ -40,7 +40,7 @@ public class Utils{
      * constant TOKENS DIRECTORY PATH.
      */
     private static final String TOKENS_DIRECTORY_PATH =
-            System.getProperty("user.home") + "\\Dap\\tokens";
+            System.getProperty("user.home") + "\\git\\Dap\\tokens";
 //    private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**
@@ -74,7 +74,7 @@ public class Utils{
         SCOPES.add(GmailScopes.GMAIL_READONLY);
 
         File appClientSecretFile = new File(System.getProperty("user.home")
-                + "\\Dap\\credentials.json");
+                + "\\git\\Dap\\credentials.json");
 
        GoogleClientSecrets clientSecrets = GoogleClientSecrets
                 .load(JSON_FACTORY,

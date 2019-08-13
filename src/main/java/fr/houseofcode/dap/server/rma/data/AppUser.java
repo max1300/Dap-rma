@@ -1,8 +1,12 @@
 package fr.houseofcode.dap.server.rma.data;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author rma.
@@ -24,6 +28,8 @@ public class AppUser {
     private String name;
 
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<GoogleAccount> googleAccounts;
 
     /**
      * @return the id
@@ -51,6 +57,28 @@ public class AppUser {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the googleAccounts
+     */
+    public List<GoogleAccount> getGoogleAccounts() {
+        return googleAccounts;
+    }
+
+    /**
+     * @param googleAccounts the googleAccounts to set
+     */
+    public void setGoogleAccounts(List<GoogleAccount> googleAccounts) {
+        this.googleAccounts = googleAccounts;
+    }
+    
+    public void adGoogleAccount(GoogleAccount account){
+
+        account.setOwner(this);
+
+        this.getGoogleAccounts().add(account);
+
     }
 
 }
