@@ -64,6 +64,7 @@ public  class CalendarService {
 
         String str = "No upcoming events found.";
         DateTime now = new DateTime(System.currentTimeMillis());
+//        DateTime end = new DateTime(System.currentTimeMillis());
         Events events = getCalendarService(userKey).events()
                 .list("primary").setMaxResults(1).setTimeMin(now)
                 .setOrderBy("startTime").setSingleEvents(true).execute();
@@ -72,12 +73,14 @@ public  class CalendarService {
         if (!items.isEmpty()) {
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
+                DateTime endEvent = event.getEnd().getDateTime();
 
                 if (start == null) {
                     start = event.getStart().getDate();
+                    endEvent = event.getEnd().getDate();
                 }
                 str = "Evenement à venir =" + " "
-                + event.getSummary() + " pour le : " + start;
+                + event.getSummary() + " pour le : " + start + " et fin de l'evenement pour le : " + endEvent;
             }
 
         }

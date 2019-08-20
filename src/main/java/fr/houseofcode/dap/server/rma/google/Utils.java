@@ -2,9 +2,7 @@ package fr.houseofcode.dap.server.rma.google;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
@@ -36,11 +34,13 @@ public class Utils{
     /** the default JSON_FACTORY.*/
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
+    
+    
     /**
      * constant TOKENS DIRECTORY PATH.
      */
     private static final String TOKENS_DIRECTORY_PATH =
-            System.getProperty("user.home") + "\\git\\Dap\\tokens";
+            System.getProperty("user.home") + "\\git\\Dap\\tokens" + File.separator;
 //    private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**
@@ -74,7 +74,7 @@ public class Utils{
         SCOPES.add(GmailScopes.GMAIL_READONLY);
 
         File appClientSecretFile = new File(System.getProperty("user.home")
-                + "\\git\\Dap\\credentials.json");
+                + "\\git\\Dap\\credentials.json" + File.separator);
 
        GoogleClientSecrets clientSecrets = GoogleClientSecrets
                 .load(JSON_FACTORY,

@@ -1,6 +1,9 @@
 package fr.houseofcode.dap.server.rma.google;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 
 import javax.servlet.ServletException;
@@ -61,10 +64,14 @@ public class GoogleAccount {
              HttpServletRequest request,  HttpSession session)
                     throws ServletException, GeneralSecurityException {
 
+        
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
-        try {
+        
+       
+            try {
+            
             flow = Utils.getFlow();
             credential = flow.loadCredential(userKey);
             if (credential != null && credential.getAccessToken() != null) {
@@ -75,16 +82,24 @@ public class GoogleAccount {
                         flow.newAuthorizationUrl();
                 authorizationUrl.setRedirectUri(buildRedirectUri(request,
                         "/oAuth2Callback"));
+                
+                
+                
                 // store userKey in session for CallBack Access
                 session.setAttribute("userKey", userKey);
                 //TODO bam by Djer |API Google| Sauvegarde le "loginName"
                 //ici en session pour l'utiliser dans le oAuth2Callback
                 response = "redirect:" + authorizationUrl.build();
+                
+                
             }
         } catch (IOException e) {
             LOG.error("Error while loading credential (or Google Flow)", e);
         }
-        return response;
+        
+           
+            
+        return response ;
 
     }
 
@@ -107,6 +122,8 @@ public class GoogleAccount {
          String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
 
          String userKey = getuserKey(session);
+         
+         
         try {
              GoogleAuthorizationCodeFlow flow = Utils.getFlow();
              TokenResponse response = flow.newTokenRequest(decodedCode)
