@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,22 +27,15 @@ import com.google.api.services.gmail.GmailScopes;
  * tools to load correctly the access
  * to google API
  */
-public class Utils{
-    /**constant PORT. */
-    private static final int PORT = 8888;
-
+public final class Utils{
     /** the default JSON_FACTORY.*/
-    private static final JsonFactory JSON_FACTORY =
-            JacksonFactory.getDefaultInstance();
-    
-    
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
     /**
      * constant TOKENS DIRECTORY PATH.
      */
-    private static final String TOKENS_DIRECTORY_PATH =
-            System.getProperty("user.home") + "\\git\\Dap\\tokens" + File.separator;
-//    private static final String TOKENS_DIRECTORY_PATH = "tokens";
-
+    private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.home")
+                                                            + "\\Dap\\tokens" + File.separator;
     /**
      * method getJsonFactory().
      * @return constant JSON_FACTORY
@@ -51,17 +44,15 @@ public class Utils{
         return JSON_FACTORY;
     }
 
-//    /**
-//     * String CREDENTIALS_FILE_PATH.
-//     */
-//    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-
     /**
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = new ArrayList<String>();
+    private static final List<String> SCOPES = new ArrayList<>();
 
+    private Utils(){
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * load client secret.
@@ -74,20 +65,10 @@ public class Utils{
         SCOPES.add(GmailScopes.GMAIL_READONLY);
 
         File appClientSecretFile = new File(System.getProperty("user.home")
-                + "\\git\\Dap\\credentials.json" + File.separator);
+                + "\\Dap\\credentials.json" + File.separator);
 
-       GoogleClientSecrets clientSecrets = GoogleClientSecrets
-                .load(JSON_FACTORY,
-                new InputStreamReader(new FileInputStream(
-                      appClientSecretFile), Charset.forName("UTF-8")));
-
-//        InputStream in = GmailService.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
-//        if (in == null) {
-//            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
-//        }
-//        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-        return clientSecrets;
+       return GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(new FileInputStream(
+                      appClientSecretFile), StandardCharsets.UTF_8));
     }
 
     /**
@@ -97,8 +78,7 @@ public class Utils{
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    static Credential getCredentials(final String userKey)
-            throws IOException, GeneralSecurityException {
+    static Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
         GoogleAuthorizationCodeFlow flow = getFlow();
         return flow.loadCredential(userKey);
     }
@@ -109,21 +89,13 @@ public class Utils{
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    public static GoogleAuthorizationCodeFlow getFlow()
-            throws IOException, GeneralSecurityException {
+    public static GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
 
-        final NetHttpTransport hTTPTRANSPORT =
-                GoogleNetHttpTransport.newTrustedTransport();
+        final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.
-                Builder(hTTPTRANSPORT, JSON_FACTORY,
-                loadClientSecret(), SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(
-                new java.io.File(TOKENS_DIRECTORY_PATH)))
+        return new GoogleAuthorizationCodeFlow.Builder(hTTPTRANSPORT, JSON_FACTORY, loadClientSecret(), SCOPES)
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("online").build();
-
-        return flow;
-
     }
 
 }
