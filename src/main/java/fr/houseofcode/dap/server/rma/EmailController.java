@@ -8,9 +8,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 import fr.houseofcode.dap.server.rma.google.GmailServiceImpl;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author rma.
@@ -18,12 +19,13 @@ import fr.houseofcode.dap.server.rma.google.GmailServiceImpl;
  */
 @Controller
 public class EmailController {
+    /** Log4J. */
     private static final Logger LOG = LogManager.getLogger();
 
-    /** Object GmailService */
+    /** Object GmailService. */
     private GmailService gmailService;
 
-    public EmailController(GmailServiceImpl service){
+    public EmailController(final GmailServiceImpl service){
         this.gmailService = service;
     }
 

@@ -51,11 +51,10 @@ public  class GmailServiceImpl implements GmailService {
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
-    private Gmail getGmailService(String userKey)
+    private Gmail getGmailService(final String userKey)
             throws GeneralSecurityException, IOException {
         LOG.debug(
-                "connexion au service Gmail avec déclenchement "
-                        + "possible d'exceptions (IOException "
+                "connexion au service Gmail avec déclenchement possible d'exceptions (IOException "
                         + "ou GeneralSecurityException");
 
          NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -72,7 +71,7 @@ public  class GmailServiceImpl implements GmailService {
      * @throws GeneralSecurityException exception
      */
     @GetMapping("/labels")
-    public String getLabels(String userKey) throws IOException, GeneralSecurityException {
+    public String getLabels(final String userKey) throws IOException, GeneralSecurityException {
         LOG.debug("recuperation des labels avec déclenchement possible d'exceptions (IOException "
                     + "ou GeneralSecurityException");
 
@@ -95,13 +94,13 @@ public  class GmailServiceImpl implements GmailService {
     }
 
     /**
-     * MOCK : Renvoie le nombre d'email non lu dans la boite principale
+     * MOCK : Renvoie le nombre d'email non lu dans la boite principale.
      * @param userKey String return the user.
      * @return number of unread email
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    public int getNbUnreadEmail(String userKey) throws IOException, GeneralSecurityException {
+    public int getNbUnreadEmail(final String userKey) throws IOException, GeneralSecurityException {
         ListMessagesResponse response = getGmailService(userKey)
                 .users().messages().list("me").setQ("is:unread")
                 .execute();
