@@ -34,7 +34,7 @@ public class EmailControllerTest {
     public void testDisplayNbUnreadEmail() throws Exception {
         emailController.setGmailService(new GmailServiceMock());
 
-        int result = emailController.displayNbUnreadEmail("jose", new ConcurrentModel());
+        int result = emailController.displayNbUnreadEmail("jose");
         int expectedNbEmail = 12;
         Assert.assertNotNull("Nombre d'email non présent : ", result);
         Assert.assertEquals(expectedNbEmail, result);

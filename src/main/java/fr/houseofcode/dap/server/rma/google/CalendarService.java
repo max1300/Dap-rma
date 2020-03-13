@@ -2,8 +2,11 @@ package fr.houseofcode.dap.server.rma.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -19,6 +22,10 @@ import com.google.api.services.calendar.model.Events;
 
 @Service
 public  class CalendarService {
+    /**
+     * @return access to constant LOG.
+     */
+    private static final Logger LOG = LogManager.getLogger();
 
     /**the internal APPLICATION_NAME.*/
     private static  String applicationName =
@@ -38,9 +45,10 @@ public  class CalendarService {
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
-    private static Calendar getCalendarService( String userKey) throws GeneralSecurityException, IOException {
-         NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-
+    private static Calendar getCalendarService(final String userKey) throws GeneralSecurityException, IOException {
+        NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        LOG.error("An exception occurred!, in class {}. in method getCalendarService.",
+                CalendarService.class.getName());
         return new Calendar.Builder(hTTPTRANSPORT, Utils.getJsonFactory(), Utils.getCredentials(userKey))
                 .setApplicationName(CalendarService.getApplicationName())
                 .build();
@@ -53,7 +61,7 @@ public  class CalendarService {
      * @throws GeneralSecurityException exception
      */
 
-    public String getNextEvent( String userKey)
+    public String getNextEvent(final String userKey)
             throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         String str = "No upcoming events found.";
@@ -67,8 +75,10 @@ public  class CalendarService {
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
                 DateTime endEvent = event.getEnd().getDateTime();
-
+                String dateS;
+                String dateE;
                 if (start == null) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     start = event.getStart().getDate();
                     endEvent = event.getEnd().getDate();
                 }
@@ -76,6 +86,8 @@ public  class CalendarService {
                         + start + " et fin de l'evenement pour le : " + endEvent;
             }
         }
+        LOG.error("An exception occurred!, in class {}. in method getCalendarService.",
+                CalendarService.class.getName());
         return str;
     }
 

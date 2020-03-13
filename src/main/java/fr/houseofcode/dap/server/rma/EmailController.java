@@ -6,18 +6,15 @@ import java.security.GeneralSecurityException;
 import fr.houseofcode.dap.server.rma.google.GmailService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-
-import fr.houseofcode.dap.server.rma.google.GmailServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author rma.
  * 5 august. 2019
  */
-@Controller
+@RestController
 public class EmailController {
     /** Log4J. */
     private static final Logger LOG = LogManager.getLogger();
@@ -25,7 +22,7 @@ public class EmailController {
     /** Object GmailService. */
     private GmailService gmailService;
 
-    public EmailController(final GmailServiceImpl service){
+    public EmailController(final GmailService service) {
         this.gmailService = service;
     }
 
@@ -37,17 +34,14 @@ public class EmailController {
      * @throws GeneralSecurityException exception
      */
     @GetMapping(value = "/email/nbUnread")
-    public int displayNbUnreadEmail(@RequestParam String userKey, Model model)
+    public Integer displayNbUnreadEmail(@RequestParam final String userKey)
             throws IOException, GeneralSecurityException {
 
         LOG.info("recuperation des emails non lus {}.", userKey);
         String user = userKey;
-        int nbemail = gmailService.getNbUnreadEmail(userKey);
-        model.addAttribute("emails", nbemail);
-        model.addAttribute("user", user);
+        Integer nbemail = gmailService.getNbUnreadEmail(userKey);
         LOG.info("nombre de message {}.",  gmailService.getNbUnreadEmail(userKey));
 
-//        return "Gmail";
         return nbemail;
     }
 
@@ -58,17 +52,17 @@ public class EmailController {
      * @throws GeneralSecurityException exception
      */
     @GetMapping("/label/print")
-    public String displayLabel(@RequestParam String userKey) throws IOException, GeneralSecurityException {
+    public String displayLabel(@RequestParam final String userKey) throws IOException, GeneralSecurityException {
         LOG.info("Recuperation des labels");
         return gmailService.getLabels(userKey);
     }
 
 
     /**
-     * Setter of attribute gmailService
-     * @param gmailService
+     * Setter of attribute gmailService.
+     * @param mGmailService
      */
-    public void setGmailService(GmailService gmailService) {
-        this.gmailService = gmailService;
+    public void setGmailService(final GmailService mGmailService) {
+        this.gmailService = mGmailService;
     }
 }

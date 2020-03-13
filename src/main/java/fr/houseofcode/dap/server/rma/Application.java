@@ -29,7 +29,7 @@ public class Application {
      * @param args accept arguments of method main.
      * @since 1.0
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication app = new SpringApplication(Application.class);
 
         app.run(args);
@@ -42,7 +42,7 @@ public class Application {
      * @return an object from Spring
      */
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+    public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
         return args -> {
             LOG.info("Let's inspect the beans provided by Spring Boot:");
             String[] beanNames = ctx.getBeanDefinitionNames();

@@ -57,6 +57,8 @@ public  class GmailServiceImpl implements GmailService {
                 "connexion au service Gmail avec déclenchement possible d'exceptions (IOException "
                         + "ou GeneralSecurityException");
 
+        LOG.error("An exception occurred!, in class {}. in method getGmailService.",
+                GmailService.class.getName());
          NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         return new Gmail.Builder(hTTPTRANSPORT, Utils.getJsonFactory(), Utils.getCredentials(userKey))
                 .setApplicationName(GmailServiceImpl.getApplicationName())
@@ -90,6 +92,8 @@ public  class GmailServiceImpl implements GmailService {
 
         String str = builder.toString();
         LOG.info("nombre de labels gmail : {}.", labels.size());
+        LOG.error("An exception occurred!, in class {}. in method getlabels",
+                GmailService.class.getName());
         return str;
     }
 

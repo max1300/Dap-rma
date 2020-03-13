@@ -28,6 +28,9 @@ public class AppUser {
     private String name;
 
 
+    /**
+     * List of googleAccount Entity.
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<GoogleAccount> googleAccounts;
 
@@ -39,10 +42,10 @@ public class AppUser {
     }
 
     /**
-     * @param id the id to set
+     * @param mId the id to set
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(final Integer mId) {
+        this.id = mId;
     }
 
     /**
@@ -53,10 +56,10 @@ public class AppUser {
     }
 
     /**
-     * @param name the name to set
+     * @param mName the name to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(final String mName) {
+        this.name = mName;
     }
 
     /**
@@ -67,18 +70,20 @@ public class AppUser {
     }
 
     /**
-     * @param googleAccounts the googleAccounts to set
+     * Mehtod to modify a googleAccount.
+     * @param mGoogleAccounts the googleAccounts to set.
      */
-    public void setGoogleAccounts(List<GoogleAccount> googleAccounts) {
-        this.googleAccounts = googleAccounts;
+    public void setGoogleAccounts(final List<GoogleAccount> mGoogleAccounts) {
+        this.googleAccounts = mGoogleAccounts;
     }
-    
-    public void adGoogleAccount(GoogleAccount account){
 
+    /**
+     * Method to add a googleAccount.
+     * @param account
+     */
+    public void adGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
-
         this.getGoogleAccounts().add(account);
-
     }
 
 }

@@ -1,10 +1,11 @@
 package fr.houseofcode.dap.server.rma;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import fr.houseofcode.dap.server.rma.data.AppUser;
 import fr.houseofcode.dap.server.rma.data.AppUserRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author rma.
@@ -18,8 +19,12 @@ public class UserController {
      */
     private AppUserRepository appUserRepo;
 
-    public UserController(AppUserRepository appUserRepo) {
-        this.appUserRepo = appUserRepo;
+    /**
+     * Constructor for UserController class.
+     * @param mAppUserRepo
+     */
+    public UserController(final AppUserRepository mAppUserRepo) {
+        this.appUserRepo = mAppUserRepo;
     }
 
     /**
@@ -36,7 +41,7 @@ public class UserController {
      * @param name as name of new user
      */
     @GetMapping("user/add")
-    public void addUser(@RequestParam  String name) {
+    public void addUser(@RequestParam final String name) {
         AppUser entity = new AppUser();
         entity.setName(name);
         appUserRepo.save(entity);

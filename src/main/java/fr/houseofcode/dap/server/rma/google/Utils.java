@@ -27,7 +27,7 @@ import com.google.api.services.gmail.GmailScopes;
  * tools to load correctly the access
  * to google API
  */
-public final class Utils{
+public final class Utils {
     /** the default JSON_FACTORY.*/
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
@@ -50,7 +50,7 @@ public final class Utils{
      */
     private static final List<String> SCOPES = new ArrayList<>();
 
-    private Utils(){
+    private Utils() {
         throw new IllegalStateException("Utility class");
     }
 

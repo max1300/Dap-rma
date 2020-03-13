@@ -13,7 +13,6 @@ public class GoogleAccount {
     @Id
     @GeneratedValue
     private Integer id;
-    
     /**
      * Attribute for the owner of the account.
      */
@@ -28,10 +27,10 @@ public class GoogleAccount {
     }
 
     /**
-     * @param id the id to set
+     * @param mId the id to set
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(final Integer mId) {
+        this.id = mId;
     }
 
     /**
@@ -42,11 +41,9 @@ public class GoogleAccount {
     }
 
     /**
-     * @param owner the owner to set
+     * @param mOwner the owner to set
      */
-    public void setOwner(AppUser owner) {
-        this.owner = owner;
+    public void setOwner(final AppUser mOwner) {
+        this.owner = mOwner;
     }
-    
-
 }

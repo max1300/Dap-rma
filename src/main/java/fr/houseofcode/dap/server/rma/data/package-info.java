@@ -1,4 +1,4 @@
 /**
- * package contains generics info on project.
+ * Data package.
  */
 package fr.houseofcode.dap.server.rma.data;

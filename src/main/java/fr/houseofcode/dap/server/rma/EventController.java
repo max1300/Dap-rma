@@ -18,6 +18,9 @@ import fr.houseofcode.dap.server.rma.google.CalendarService;
 @RestController
 public class EventController {
 
+    /**
+     * Instance of Logger to use in class.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
@@ -25,8 +28,12 @@ public class EventController {
      */
     private CalendarService calendarService;
 
-    public EventController(CalendarService calendarService) {
-        this.calendarService = calendarService;
+    /**
+     * Constructor for eventController class.
+     * @param mCalendarService
+     */
+    public EventController(final CalendarService mCalendarService) {
+        this.calendarService = mCalendarService;
     }
 
     /**
@@ -37,7 +44,7 @@ public class EventController {
      * @throws GeneralSecurityException exception
      */
     @GetMapping("/event/next")
-    public String displayNextEvent(@RequestParam String userKey) throws IOException, GeneralSecurityException {
+    public String displayNextEvent(@RequestParam final String userKey) throws IOException, GeneralSecurityException {
         LOG.info("recuperation des next events");
         return calendarService.getNextEvent(userKey);
     }

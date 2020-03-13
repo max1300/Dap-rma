@@ -1,7 +1,6 @@
 package fr.houseofcode.dap.server.rma.google;
 
 import java.io.IOException;
-import java.net.URI;
 import java.security.GeneralSecurityException;
 
 import javax.servlet.ServletException;
@@ -36,6 +35,9 @@ public class GoogleAccount {
      */
     private static final Logger LOG = LogManager.getLogger();
 
+    /**
+     * Attribute of type String that allow to use the literal userkey in the class.
+     */
     private static final String USER_KEY = "userKey";
 
     /**
@@ -60,7 +62,8 @@ public class GoogleAccount {
      */
 
     @GetMapping("/account/add/{userKey}")
-    public String addAccount(@PathVariable String userKey, HttpServletRequest request,  HttpSession session)
+    public String addAccount(@PathVariable final String userKey, final HttpServletRequest request,
+                             final HttpSession session)
                     throws ServletException, GeneralSecurityException {
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
@@ -86,7 +89,7 @@ public class GoogleAccount {
             LOG.error("Error while loading credential (or Google Flow)", e);
         }
 
-        return response ;
+        return response;
     }
 
     /**
@@ -94,14 +97,13 @@ public class GoogleAccount {
      * @param request The HTTP Request
      * @param code The (encoded) code use by Google (token, expirationDate,...)
      * @param session the HTTP Session
-     * @return the view to display
      * @throws ServletException When Google account
-     * could not be connected to DaP.
      * @throws GeneralSecurityException exception
+     * @return the view to display
      */
     @GetMapping("/oAuth2Callback")
-    public String oAuthCallback(@RequestParam  String code, HttpServletRequest request,  HttpSession session)
-                    throws ServletException, GeneralSecurityException {
+    public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
+                                final HttpSession session) throws ServletException, GeneralSecurityException {
          String decodedCode = extracCode(request);
          String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
          String userKey = getuserKey(session);
@@ -125,7 +127,6 @@ public class GoogleAccount {
             LOG.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
-
         return "redirect:/";
     }
 
@@ -135,7 +136,7 @@ public class GoogleAccount {
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
-    private String getuserKey( HttpSession session) throws ServletException {
+    private String getuserKey(final HttpSession session) throws ServletException {
         String userKey = null;
 
         if (null != session && null != session.getAttribute(USER_KEY)) {
@@ -156,7 +157,7 @@ public class GoogleAccount {
      * @return the decoded code
      * @throws ServletException if the code cannot be decoded
      */
-    private String extracCode( HttpServletRequest request) throws ServletException {
+    private String extracCode(final HttpServletRequest request) throws ServletException {
          StringBuffer buf = request.getRequestURL();
 
          if (null != request.getQueryString()) {
@@ -185,7 +186,7 @@ public class GoogleAccount {
      * @param destination the "path" to the resource
      * @return an absolute URI
      */
-    protected String buildRedirectUri( HttpServletRequest req, String destination) {
+    protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
         GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
         return url.build();
