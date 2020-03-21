@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import fr.houseofcode.dap.server.rma.google.GmailService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +23,8 @@ public class EmailController {
     /** Object GmailService. */
     private GmailService gmailService;
 
-    public EmailController(final GmailService service) {
-        this.gmailService = service;
+    public EmailController(final GmailService mGmailService) {
+        this.gmailService = mGmailService;
     }
 
     /**
@@ -38,11 +39,7 @@ public class EmailController {
             throws IOException, GeneralSecurityException {
 
         LOG.info("recuperation des emails non lus {}.", userKey);
-        String user = userKey;
-        Integer nbemail = gmailService.getNbUnreadEmail(userKey);
-        LOG.info("nombre de message {}.",  gmailService.getNbUnreadEmail(userKey));
-
-        return nbemail;
+        return gmailService.getNbUnreadEmail(userKey);
     }
 
     /**

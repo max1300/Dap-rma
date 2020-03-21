@@ -2,7 +2,6 @@ package fr.houseofcode.dap.server.rma.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -75,10 +74,7 @@ public  class CalendarService {
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
                 DateTime endEvent = event.getEnd().getDateTime();
-                String dateS;
-                String dateE;
                 if (start == null) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     start = event.getStart().getDate();
                     endEvent = event.getEnd().getDate();
                 }

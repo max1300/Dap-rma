@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     /**
-     * simple test to use Spring data.
+     * Simple test to use Spring data.
      * @return salut les gens
      */
     @GetMapping("/")

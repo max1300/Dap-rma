@@ -106,8 +106,7 @@ public  class GmailServiceImpl implements GmailService {
      */
     public int getNbUnreadEmail(final String userKey) throws IOException, GeneralSecurityException {
         ListMessagesResponse response = getGmailService(userKey)
-                .users().messages().list("me").setQ("is:unread")
-                .execute();
+                .users().messages().list("me").setQ("is:unread in:inbox").execute();
 
         List<Message> messages = new ArrayList<>();
 
