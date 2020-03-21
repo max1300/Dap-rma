@@ -15,6 +15,7 @@ public interface GmailService {
     int getNbUnreadEmail(String userKey)throws IOException, GeneralSecurityException;
 
     /**
+     * * MOCK : Renvoie les labels de la boite principale.
      * @param userKey type String
      * @throws IOException exception
      * @throws GeneralSecurityException exception

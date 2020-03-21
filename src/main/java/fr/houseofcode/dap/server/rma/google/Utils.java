@@ -19,6 +19,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author rma
@@ -28,16 +30,20 @@ import com.google.api.services.gmail.GmailScopes;
  * to google API
  */
 public final class Utils {
-    /** the default JSON_FACTORY.*/
+    /**
+     * LOG4J.
+     */
+    private static final Logger LOG = LogManager.getLogger();
+    /** The default JSON_FACTORY.*/
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     /**
-     * constant TOKENS DIRECTORY PATH.
+     * Constant TOKENS DIRECTORY PATH.
      */
     private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.home")
                                                             + "\\Dap\\tokens" + File.separator;
     /**
-     * method getJsonFactory().
+     * Method getJsonFactory().
      * @return constant JSON_FACTORY
      */
     public static JsonFactory getJsonFactory() {
@@ -55,12 +61,14 @@ public final class Utils {
     }
 
     /**
-     * load client secret.
+     * Load client secret.
      * @return client secret
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
     private static GoogleClientSecrets loadClientSecret() throws IOException {
+        LOG.debug("Chargement du client secret "
+                + "avec déclenchement possible d'exceptions (IOException)");
         SCOPES.add(CalendarScopes.CALENDAR_READONLY);
         SCOPES.add(GmailScopes.GMAIL_READONLY);
 
@@ -79,6 +87,9 @@ public final class Utils {
      * @throws GeneralSecurityException exception
      */
     static Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
+        LOG.debug("Obtention de la credential "
+                + "avec déclenchement possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
         GoogleAuthorizationCodeFlow flow = getFlow();
         return flow.loadCredential(userKey);
     }
@@ -90,7 +101,9 @@ public final class Utils {
      * @throws GeneralSecurityException exception
      */
     public static GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
-
+        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur "
+                + "avec déclenchement possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
         final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new GoogleAuthorizationCodeFlow.Builder(hTTPTRANSPORT, JSON_FACTORY, loadClientSecret(), SCOPES)

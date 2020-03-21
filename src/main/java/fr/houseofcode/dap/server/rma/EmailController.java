@@ -6,7 +6,6 @@ import java.security.GeneralSecurityException;
 import fr.houseofcode.dap.server.rma.google.GmailService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,7 @@ public class EmailController {
     }
 
     /**
-     * number of unread email on mailbox.
+     * Number of unread email on mailbox.
      * @return number of unread email
      * @param userKey accept name of person who use the application
      * @throws IOException exception
@@ -43,7 +42,8 @@ public class EmailController {
     }
 
     /**
-     * @return label from mailbox.
+     * Load labels of mailbox.
+     * @return label from mailbox
      * @param userKey accept name of person who use the application
      * @throws IOException exception
      * @throws GeneralSecurityException exception

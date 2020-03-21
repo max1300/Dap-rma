@@ -31,7 +31,7 @@ import com.google.api.client.http.GenericUrl;
 public class GoogleAccount {
 
     /**
-     * @return access to constant LOG.
+     * LOG4J.
      */
     private static final Logger LOG = LogManager.getLogger();
 
@@ -41,12 +41,12 @@ public class GoogleAccount {
     private static final String USER_KEY = "userKey";
 
     /**
-     * @return constant first char of userKey.
+     * Constant first char of userKey.
      */
     private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 
     /**
-     * @return constant last char of userKey.
+     * Constant last char of userKey.
      */
     private static final int SENSIBLE_DATA_LAST_CHAR = 5;
 
@@ -60,11 +60,11 @@ public class GoogleAccount {
      * @throws ServletException exception
      * @throws GeneralSecurityException exception
      */
-
     @GetMapping("/account/add/{userKey}")
     public String addAccount(@PathVariable final String userKey, final HttpServletRequest request,
-                             final HttpSession session)
-                    throws ServletException, GeneralSecurityException {
+                             final HttpSession session) throws  GeneralSecurityException {
+        LOG.debug("Ajout d'un compte google avec déclenchement possible d'exception :"
+                + "GeneralSecurityException");
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
@@ -104,6 +104,8 @@ public class GoogleAccount {
     @GetMapping("/oAuth2Callback")
     public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
                                 final HttpSession session) throws ServletException, GeneralSecurityException {
+        LOG.debug("Auth2 callback handler avec déclenchement possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
          String decodedCode = extracCode(request);
          String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
          String userKey = getuserKey(session);
@@ -131,12 +133,13 @@ public class GoogleAccount {
     }
 
     /**
-     * retrieve the User ID in Session.
+     * Retrieve the User ID in Session.
      * @param session the HTTP Session
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
     private String getuserKey(final HttpSession session) throws ServletException {
+        LOG.debug("Accès à la userkey avec déclenchement possible d'exceptions (ServletException)");
         String userKey = null;
 
         if (null != session && null != session.getAttribute(USER_KEY)) {
@@ -158,6 +161,9 @@ public class GoogleAccount {
      * @throws ServletException if the code cannot be decoded
      */
     private String extracCode(final HttpServletRequest request) throws ServletException {
+         LOG.debug("Extractio code google Auth2"
+                 + " avec déclenchement possible "
+                 + "d'exceptions (ServletException)");
          StringBuffer buf = request.getRequestURL();
 
          if (null != request.getQueryString()) {
@@ -187,6 +193,7 @@ public class GoogleAccount {
      * @return an absolute URI
      */
     protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
+        LOG.info("building redirect URI for authorization");
         GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
         return url.build();

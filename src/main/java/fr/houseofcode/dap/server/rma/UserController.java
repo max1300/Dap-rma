@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     /**
-     * object allow to use interface AppUserRepository.
+     * Object allow to use interface AppUserRepository.
      */
     private AppUserRepository appUserRepo;
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     /**
-     * method to find a user.
+     * Method to find a user.
      * @return a user from database
      */
     @GetMapping("user/all")
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     /**
-     * method to create a new user in database.
+     * Method to create a new user in database.
      * @param name as name of new user
      */
     @GetMapping("user/add")

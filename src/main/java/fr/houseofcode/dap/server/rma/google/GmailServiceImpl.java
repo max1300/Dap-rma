@@ -28,24 +28,25 @@ import com.google.api.services.gmail.model.Message;
 public  class GmailServiceImpl implements GmailService {
 
     /**
-     * @return access to constant LOG.
+     * LOG4J.
      */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
-     * @return the internal APPLICATION_NAME.
+     * Internal ApplicationName.
      */
     private static  String applicationName = "Gmail API Java Quickstart";
 
     /**
-     * @return access to constant APPLICATION_NAME.
+     * Getter for constant ApplicationName.
+     * @return access to constant ApplicationName.
      */
     public static String getApplicationName() {
         return applicationName;
     }
 
     /**
-     * secure connection to GmailService.
+     * Secure connection to GmailService.
      * @return a instance of Gmail
      * @param userKey accept name of person who use the application
      * @throws GeneralSecurityException exception
@@ -53,9 +54,9 @@ public  class GmailServiceImpl implements GmailService {
      */
     private Gmail getGmailService(final String userKey)
             throws GeneralSecurityException, IOException {
-        LOG.debug(
-                "connexion au service Gmail avec déclenchement possible d'exceptions (IOException "
-                        + "ou GeneralSecurityException");
+        LOG.debug("connexion au service Gmail "
+                + "avec déclenchement possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
 
         LOG.error("An exception occurred!, in class {}. in method getGmailService.",
                 GmailService.class.getName());
@@ -105,6 +106,7 @@ public  class GmailServiceImpl implements GmailService {
      * @throws GeneralSecurityException exception
      */
     public int getNbUnreadEmail(final String userKey) throws IOException, GeneralSecurityException {
+        LOG.info("Searching number of unread email in mailbox");
         ListMessagesResponse response = getGmailService(userKey)
                 .users().messages().list("me").setQ("is:unread in:inbox").execute();
 

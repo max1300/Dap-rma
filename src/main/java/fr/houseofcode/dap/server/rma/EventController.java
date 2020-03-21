@@ -24,7 +24,7 @@ public class EventController {
     private static final Logger LOG = LogManager.getLogger();
 
     /**
-     * object CalendarService.
+     * Object CalendarService.
      */
     private CalendarService calendarService;
 
@@ -37,7 +37,7 @@ public class EventController {
     }
 
     /**
-     * next event on googleCalendar.
+     * Next event on googleCalendar.
      * @return the next event event on googleCalendar
      * @param userKey accept name of person who use the application
      * @throws IOException exception

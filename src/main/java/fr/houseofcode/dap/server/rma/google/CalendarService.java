@@ -22,16 +22,16 @@ import com.google.api.services.calendar.model.Events;
 @Service
 public  class CalendarService {
     /**
-     * @return access to constant LOG.
+     * LOG4J.
      */
     private static final Logger LOG = LogManager.getLogger();
 
-    /**the internal APPLICATION_NAME.*/
+    /** The internal APPLICATION_NAME.*/
     private static  String applicationName =
             "Google Calendar API Java Quickstart";
 
     /**
-     * constant APPLICATION_NAME.
+     * Getter for constant APPLICATION_NAME.
      * @return constant APPLICATION_NAME
      */
     public static String getApplicationName() {
@@ -39,30 +39,37 @@ public  class CalendarService {
     }
 
     /**
+     * Access to services of Google Calendar.
      * @return a list of service.
      * @param userKey accept name of person who use the application
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
     private static Calendar getCalendarService(final String userKey) throws GeneralSecurityException, IOException {
-        NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        LOG.error("An exception occurred!, in class {}. in method getCalendarService.",
-                CalendarService.class.getName());
-        return new Calendar.Builder(hTTPTRANSPORT, Utils.getJsonFactory(), Utils.getCredentials(userKey))
+        LOG.debug("recuperation d'un acces au service Google calendar"
+                + " avec déclenchement possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
+        NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        return new Calendar.Builder(httpTransport, Utils.getJsonFactory(), Utils.getCredentials(userKey))
                 .setApplicationName(CalendarService.getApplicationName())
                 .build();
     }
 
     /**
+     * Load next event containing in Google Calendar.
      * @return a String who contains the nextEvent.
      * @param userKey accept name of person who use the application
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-
     public String getNextEvent(final String userKey)
             throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
+
+        LOG.debug("recuperation du prochain event Google calendar"
+                + " avec déclenchement possible d'exceptions (IOException "
+                + "ou GeneralSecurityException");
+
         String str = "No upcoming events found.";
         DateTime now = new DateTime(System.currentTimeMillis());
         Events events = getCalendarService(userKey).events()
@@ -82,9 +89,6 @@ public  class CalendarService {
                         + start + " et fin de l'evenement pour le : " + endEvent;
             }
         }
-        LOG.error("An exception occurred!, in class {}. in method getCalendarService.",
-                CalendarService.class.getName());
         return str;
     }
-
 }

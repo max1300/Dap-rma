@@ -18,22 +18,18 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
 
-    /**
-     * @return access to constant LOG.
-     */
+    /** Log4J. */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
-     * main that call Spring.
+     * Main that call Spring.
      * Objective is to run the server
      * @param args accept arguments of method main.
      * @since 1.0
      */
     public static void main(final String[] args) {
         SpringApplication app = new SpringApplication(Application.class);
-
         app.run(args);
-
     }
 
     /**
