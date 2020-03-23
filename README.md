@@ -37,10 +37,10 @@ spring.jpa.generate-ddl=true
 spring.datasource.continue-on-error=true
 ```
 Avant de démarrer Spring, il faudra utiliser un outil de création de BDD type Mysql Workbench, PhpMyAdmin.
-Une fois cet outil installer, en supposant que vous avez quelques notions (sinon je vous encourage à regarder 
-rapidement leur fonctionnement), créer un nouveau schéma avec le nom qui vous conviendra ('Dap-bdd' pour rester 
+Une fois cet outil installé, en supposant que vous avez quelques notions (sinon je vous encourage à regarder 
+rapidement leur fonctionnement), créez un nouveau schéma avec le nom qui vous conviendra ('Dap-bdd' pour rester 
 cohérent sinon).
-Une fois cela fait, vous disposer normalement de toutes les données manquantes pour finaliser la configuration Spring
+Une fois cela fait, vous disposez normalement de toutes les données manquantes pour finaliser la configuration Spring
 de votre BDD.
 
 #### Les autorisations Google
