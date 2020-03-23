@@ -4,13 +4,19 @@ Creation d'une app client-serveur dans le cadre de la formation house of code Ly
 Ce projet utilise les API Google (GMAIL, CALENDAR) et permettra de lire les emails non lus, la liste des labels
 dans GMAIL, le prochain événement dans CALENDAR.
 
+
+
 ## Getting started
 
 Ce projet est un projet Java utilisant Spring et Maven. Vous devez donc disposez d'un IDE au choix type Intellij ou Eclipse.
 
+
+
 ### Mise en place
 
 Une fois le projet récupéré et qu'il s'affiche sur votre IDE, voici les étapes à suivre pour installer :
+
+
 
 #### La BDD
 
@@ -43,6 +49,8 @@ cohérent sinon).
 Une fois cela fait, vous disposez normalement de toutes les données manquantes pour finaliser la configuration Spring
 de votre BDD.
 
+
+
 #### Les autorisations Google
 
 Ici rien de bien sorcier, mais quelques manipulations à faire correctement.
@@ -53,18 +61,23 @@ Ici rien de bien sorcier, mais quelques manipulations à faire correctement.
 4. Si vous n'avez pas de compte, il faut en créer un. Puis rendez-vous dans l'onglet bibliothèque et activez les APIS GMAIL et GOOGLE CALENDAR.
 5. Ensuite rendez-vous dans l'onglet identifiant et cliquer sur créer des identifiants -> ID Client OAuth -> choisir application web
 6. Dans la fenêtre qui apparaît donnez un nom à votre identifiant puis séléctionnez ajouter une URI. Il faut alors indiquer l'uri suivante :
+
   ```
   http://localhost:8080/oAuth2Callback
   ```
+  
  7. Enfin cliquer sur enregistrer.
  8. Télécharger ensuite cet identifiant nouvellement créé (sur la ligne de l'identifiant tout à droite)
  9. Renommer l'identifiant télécharger ainsi : 'credentials.json' et le placer dans le dossier Dap (mais pas dans le dossier tokens)
  10. Vous êtes normalement bon pour lancer le server.
  
+ 
+ 
  #### Le lancement de l'application
  
  Vous allez enfin pouvoir faire un run de l'application. Une fois cela fait, quelques étapes sont à suivre pour l'utiliser correctement :
- 1. rendez vous sur -> http://localhost/user/all
+ 
+ 1. Rendez vous sur -> http://localhost/user/all
  Vous devriez voir que vous n'avez aucun user encore présent.
  2. Ajouter un user -> http://localhost/user/add?name=jose
  Un user devrait être ajouter.Vérifier le en vous rendant à l'url indiquer dans l'étape 1.
