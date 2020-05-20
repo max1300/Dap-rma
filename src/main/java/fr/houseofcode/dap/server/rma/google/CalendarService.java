@@ -18,7 +18,7 @@ import com.google.api.services.calendar.model.Events;
 /**
  *  @author rma.
  *  5 juil. 2019
- *  class of CalendarService.
+ *  Acces to the Google Calendar Api.
  */
 @Service
 public  class CalendarService {
@@ -35,14 +35,6 @@ public  class CalendarService {
             "Google Calendar API Java Quickstart";
 
     /**
-     * Getter to return the value of APPLICATION_NAME {@value #APPLICATION_NAME}.
-     * @return constant APPLICATION_NAME
-     */
-    public static String getApplicationName() {
-        return APPLICATION_NAME;
-    }
-
-    /**
      * Access to services of Google Calendar.
      * @return a list of service.
      * @param userKey accept name of person who use the application
@@ -50,12 +42,11 @@ public  class CalendarService {
      * @throws IOException exception
      */
     private static Calendar getCalendarService(final String userKey) throws GeneralSecurityException, IOException {
-        LOG.debug("recuperation d'un acces au service Google calendar"
-                + " avec déclenchement possible d'exceptions (IOException "
-                + "ou GeneralSecurityException");
+        LOG.debug("recuperation d'un acces au service Google calendar for userKey : "
+                + userKey);
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         return new Calendar.Builder(httpTransport, Utils.getJsonFactory(), Utils.getCredentials(userKey))
-                .setApplicationName(CalendarService.getApplicationName())
+                .setApplicationName(CalendarService.APPLICATION_NAME)
                 .build();
     }
 
@@ -68,11 +59,9 @@ public  class CalendarService {
      */
     public String getNextEvent(final String userKey)
             throws IOException, GeneralSecurityException {
-        // Build a new authorized API client service.
 
-        LOG.debug("recuperation du prochain event Google calendar"
-                + " avec déclenchement possible d'exceptions (IOException "
-                + "ou GeneralSecurityException");
+        LOG.debug("recuperation du prochain event Google calendar for userKey : "
+                + userKey);
 
         String str = "No upcoming events found.";
         DateTime now = new DateTime(System.currentTimeMillis());
@@ -89,8 +78,7 @@ public  class CalendarService {
                     start = event.getStart().getDate();
                     endEvent = event.getEnd().getDate();
                 }
-                str = "Evenement à venir =" + " " + event.getSummary() + " pour le : "
-                        + start + " et fin de l'evenement pour le : " + endEvent;
+                str = event.getSummary() + start + endEvent;
             }
         }
         return str;

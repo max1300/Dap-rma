@@ -60,8 +60,13 @@ public final class Utils {
      */
     private static final List<String> SCOPES = new ArrayList<>();
 
+    /**
+     * Constructor of class Utils
+     */
     private Utils() {
         throw new IllegalStateException("Utility class");
+
+
     }
 
     /**
@@ -91,9 +96,7 @@ public final class Utils {
      * @throws GeneralSecurityException exception
      */
     static Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
-        LOG.debug("Obtention de la credential "
-                + "avec déclenchement possible d'exceptions (IOException "
-                + "ou GeneralSecurityException");
+        LOG.debug("Obtention de la credential for userKey : " + userKey);
         GoogleAuthorizationCodeFlow flow = getFlow();
         return flow.loadCredential(userKey);
     }
@@ -105,14 +108,11 @@ public final class Utils {
      * @throws GeneralSecurityException exception
      */
     public static GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
-        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur "
-                + "avec déclenchement possible d'exceptions (IOException "
-                + "ou GeneralSecurityException");
+        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur");
         final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new GoogleAuthorizationCodeFlow.Builder(hTTPTRANSPORT, JSON_FACTORY, loadClientSecret(), SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("online").build();
     }
-
 }

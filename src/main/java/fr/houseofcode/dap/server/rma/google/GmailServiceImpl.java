@@ -36,13 +36,6 @@ public  class GmailServiceImpl implements GmailService {
      */
     private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
 
-    /**
-     * Getter to return the name of the API.
-     * @return access to constant ApplicationName.
-     */
-    public static String getApplicationName() {
-        return APPLICATION_NAME;
-    }
 
     /**
      * Secure connection to GmailService.
@@ -53,15 +46,11 @@ public  class GmailServiceImpl implements GmailService {
      */
     private Gmail getGmailService(final String userKey)
             throws GeneralSecurityException, IOException {
-        LOG.debug("connexion au service Gmail "
-                + "avec déclenchement possible d'exceptions (IOException "
-                + "ou GeneralSecurityException");
+        LOG.debug("connexion au service Gmail for userKey : " + userKey);
 
-        LOG.error("An exception occurred!, in class {}. in method getGmailService.",
-                GmailService.class.getName());
-         NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         return new Gmail.Builder(hTTPTRANSPORT, Utils.getJsonFactory(), Utils.getCredentials(userKey))
-                .setApplicationName(GmailServiceImpl.getApplicationName())
+                .setApplicationName(GmailServiceImpl.APPLICATION_NAME)
                 .build();
     }
 
@@ -74,8 +63,7 @@ public  class GmailServiceImpl implements GmailService {
      */
     @GetMapping("/labels")
     public String getLabels(final String userKey) throws IOException, GeneralSecurityException {
-        LOG.debug("recuperation des labels avec déclenchement possible d'exceptions (IOException "
-                    + "ou GeneralSecurityException");
+        LOG.debug("recuperation des labels for userKey : " + userKey);
 
         StringBuilder builder = new StringBuilder();
         ListLabelsResponse listResponse = getGmailService(userKey).users().labels().list("me").execute();
@@ -86,15 +74,11 @@ public  class GmailServiceImpl implements GmailService {
         } else {
             for (Label label : labels) {
                 builder.append(label.getName());
-                builder.append(System.getProperty("line.separator"));
             }
         }
 
-        String str = builder.toString();
         LOG.info("nombre de labels gmail : {}.", labels.size());
-        LOG.error("An exception occurred!, in class {}. in method getlabels",
-                GmailService.class.getName());
-        return str;
+        return builder.toString();
     }
 
     /**
@@ -105,7 +89,7 @@ public  class GmailServiceImpl implements GmailService {
      * @throws GeneralSecurityException exception
      */
     public int getNbUnreadEmail(final String userKey) throws IOException, GeneralSecurityException {
-        LOG.info("Searching number of unread email in mailbox");
+        LOG.info("Searching number of unread email in mailbox of userKey : " + userKey);
         ListMessagesResponse response = getGmailService(userKey)
                 .users().messages().list("me").setQ("is:unread in:inbox").execute();
 

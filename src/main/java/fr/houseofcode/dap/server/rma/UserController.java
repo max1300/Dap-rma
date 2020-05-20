@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     /**
-     * Object AppUserRepository.
+     * Injection of AppUserRepository.
      */
     private AppUserRepository appUserRepo;
 

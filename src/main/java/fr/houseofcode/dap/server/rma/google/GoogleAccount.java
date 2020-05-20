@@ -62,8 +62,7 @@ public class GoogleAccount {
     @GetMapping("/account/add/{userKey}")
     public String addAccount(@PathVariable final String userKey, final HttpServletRequest request,
                              final HttpSession session) throws  GeneralSecurityException {
-        LOG.debug("Ajout d'un compte google avec déclenchement possible d'exception :"
-                + "GeneralSecurityException");
+        LOG.debug("Ajout d'un compte google for userKey : " + userKey);
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
         Credential credential;
@@ -138,7 +137,7 @@ public class GoogleAccount {
      * @throws ServletException if no User Id in session
      */
     private String getuserKey(final HttpSession session) throws ServletException {
-        LOG.debug("Accès à la userkey avec déclenchement possible d'exceptions (ServletException)");
+        LOG.debug("Retrouve l'id du user en session avec possible exception (ServletException)");
         String userKey = null;
 
         if (null != session && null != session.getAttribute(USER_KEY)) {
@@ -160,7 +159,7 @@ public class GoogleAccount {
      * @throws ServletException if the code cannot be decoded
      */
     private String extracCode(final HttpServletRequest request) throws ServletException {
-         LOG.debug("Extractio code google Auth2"
+         LOG.debug("Extract OAuth2 Google code (from URL) and decode it"
                  + " avec déclenchement possible "
                  + "d'exceptions (ServletException)");
          StringBuffer buf = request.getRequestURL();
@@ -192,7 +191,7 @@ public class GoogleAccount {
      * @return an absolute URI
      */
     protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
-        LOG.info("building redirect URI for authorization");
+        LOG.debug("building redirect URI for authorization");
         GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
         return url.build();
