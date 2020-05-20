@@ -3,12 +3,13 @@ package fr.houseofcode.dap.server.rma;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import fr.houseofcode.dap.server.rma.google.GmailService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import fr.houseofcode.dap.server.rma.google.GmailService;
 
 /**
  * @author rma.
@@ -22,6 +23,7 @@ public class EmailController {
     /** Object GmailService. */
     private GmailService gmailService;
 
+    //TODO RMA by Djer |JavaDoc| Il manque la JavaDoc de ton constructeur (description, paramètres)
     public EmailController(final GmailService mGmailService) {
         this.gmailService = mGmailService;
     }
@@ -50,15 +52,16 @@ public class EmailController {
      */
     @GetMapping("/label/print")
     public String displayLabel(@RequestParam final String userKey) throws IOException, GeneralSecurityException {
+        //TODO RMA by Djer |Log4J| Contextualise tes messages de log. "... for userKey : " + userKey.
         LOG.info("Recuperation des labels");
         return gmailService.getLabels(userKey);
     }
-
 
     /**
      * Setter of attribute gmailService.
      * @param mGmailService
      */
+    //TODO RMA by Djer |JavaDoc| Il manque la description du paramètre "mGmailService".
     public void setGmailService(final GmailService mGmailService) {
         this.gmailService = mGmailService;
     }

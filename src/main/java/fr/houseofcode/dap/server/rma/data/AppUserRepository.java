@@ -8,6 +8,8 @@ import org.springframework.data.repository.CrudRepository;
  *
  */
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
+
+    //TODO RMA by Djer |JavaDoc| Il manque la description de la méthode, le retour, et la description du paramètre.
     AppUser findByName(String name);
 
 }

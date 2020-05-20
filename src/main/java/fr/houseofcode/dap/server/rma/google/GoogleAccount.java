@@ -30,24 +30,16 @@ import com.google.api.client.http.GenericUrl;
 @Controller
 public class GoogleAccount {
 
-    /**
-     * LOG4J.
-     */
+    /** LOG4J. */
     private static final Logger LOG = LogManager.getLogger();
 
-    /**
-     * Attribute of type String that allow to use the literal userkey in the class.
-     */
+    /** Attribute of type String that allow to use the literal userkey in the class. */
     private static final String USER_KEY = "userKey";
 
-    /**
-     * Constant first char of userKey.
-     */
+    /** Constant first char of userKey. */
     private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 
-    /**
-     * Constant last char of userKey.
-     */
+    /** Constant last char of userKey. */
     private static final int SENSIBLE_DATA_LAST_CHAR = 5;
 
     /**
@@ -62,9 +54,9 @@ public class GoogleAccount {
      */
     @GetMapping("/account/add/{userKey}")
     public String addAccount(@PathVariable final String userKey, final HttpServletRequest request,
-                             final HttpSession session) throws  GeneralSecurityException {
-        LOG.debug("Ajout d'un compte google avec déclenchement possible d'exception :"
-                + "GeneralSecurityException");
+            final HttpSession session) throws GeneralSecurityException {
+        //TODO RMA by Djer |Log4J| Contextualise tes messages de log. "... for userKey : " + userKey.
+        LOG.debug("Ajout d'un compte google avec déclenchement possible d'exception :" + "GeneralSecurityException");
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
@@ -76,14 +68,11 @@ public class GoogleAccount {
                 response = "AccountAlreadyAdded";
             } else {
                 // redirect to the authorization flow
-                 AuthorizationCodeRequestUrl authorizationUrl =
-                        flow.newAuthorizationUrl();
-                authorizationUrl.setRedirectUri(buildRedirectUri(request,
-                        "/oAuth2Callback"));
+                AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
+                authorizationUrl.setRedirectUri(buildRedirectUri(request, "/oAuth2Callback"));
 
                 session.setAttribute(USER_KEY, userKey);
                 response = "redirect:" + authorizationUrl.build();
-
             }
         } catch (IOException e) {
             LOG.error("Error while loading credential (or Google Flow)", e);
@@ -103,27 +92,28 @@ public class GoogleAccount {
      */
     @GetMapping("/oAuth2Callback")
     public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
-                                final HttpSession session) throws ServletException, GeneralSecurityException {
+            final HttpSession session) throws ServletException, GeneralSecurityException {
+        //TODO RMA by Djer |Log4J| Contextualise tes messages de log. "... for userKey : " + userKey.
         LOG.debug("Auth2 callback handler avec déclenchement possible d'exceptions (IOException "
                 + "ou GeneralSecurityException");
-         String decodedCode = extracCode(request);
-         String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
-         String userKey = getuserKey(session);
+        String decodedCode = extracCode(request);
+        String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
+        String userKey = getuserKey(session);
 
         try {
-             GoogleAuthorizationCodeFlow flow = Utils.getFlow();
-             TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
-             Credential credential = flow.createAndStoreCredential(response, userKey);
+            GoogleAuthorizationCodeFlow flow = Utils.getFlow();
+            TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
+            Credential credential = flow.createAndStoreCredential(response, userKey);
 
             if (null == credential || null == credential.getAccessToken()) {
                 LOG.warn("Trying to store a NULL AccessToken for user : {}.", userKey);
             }
 
             if (LOG.isDebugEnabled() && null != credential && null != credential.getAccessToken()) {
-                LOG.debug("New user credential stored with userKey : {}. partial AccessToken : {}.",
-                        userKey, credential.getAccessToken()
-                                .substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
+                LOG.debug("New user credential stored with userKey : {}. partial AccessToken : {}.", userKey,
+                        credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
             }
+            //TODO RMA by Djer |API Google| Tu devrais ajouter l'utilsiateur dans ta BDD ici.
 
         } catch (IOException e) {
             LOG.error("Exception while trying to store user Credential", e);
@@ -139,6 +129,7 @@ public class GoogleAccount {
      * @throws ServletException if no User Id in session
      */
     private String getuserKey(final HttpSession session) throws ServletException {
+        //TODO RMA by Djer |Log4J| "Retrieve the User ID in Session." serait plus claire (il s'agit de la description JavaDoc de la m�thode....)
         LOG.debug("Accès à la userkey avec déclenchement possible d'exceptions (ServletException)");
         String userKey = null;
 
@@ -161,17 +152,16 @@ public class GoogleAccount {
      * @throws ServletException if the code cannot be decoded
      */
     private String extracCode(final HttpServletRequest request) throws ServletException {
-         LOG.debug("Extractio code google Auth2"
-                 + " avec déclenchement possible "
-                 + "d'exceptions (ServletException)");
-         StringBuffer buf = request.getRequestURL();
+        //TODO RMA by Djer |Log4J| "Extract OAuth2 Google code (from URL) and decode it." serait plus claire (il s'agit de la description JavaDoc de la m�thode....)
+        LOG.debug("Extractio code google Auth2" + " avec déclenchement possible " + "d'exceptions (ServletException)");
+        StringBuffer buf = request.getRequestURL();
 
-         if (null != request.getQueryString()) {
+        if (null != request.getQueryString()) {
             buf.append('?').append(request.getQueryString());
         }
 
-         AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
-         String decodeCode = responseUrl.getCode();
+        AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
+        String decodeCode = responseUrl.getCode();
 
         if (decodeCode == null) {
             throw new MissingServletRequestParameterException("code", "String");
@@ -193,6 +183,7 @@ public class GoogleAccount {
      * @return an absolute URI
      */
     protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
+        //TODO RMA by Djer |Log4J| Serait mieu en "debug", je ne pense pas qu'une "utilisateur avanc�" comprenne ce message.
         LOG.info("building redirect URI for authorization");
         GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);

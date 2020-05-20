@@ -15,22 +15,15 @@ import javax.persistence.OneToMany;
 @Entity
 public class AppUser {
 
-    /**
-     * Attribute id of database.
-     */
+    /** Attribute id of database. */
     @Id
     @GeneratedValue
     private Integer id;
 
-    /**
-     * Attribute name of database.
-     */
+    /** Attribute name of database. */
     private String name;
 
-
-    /**
-     * List of googleAccount Entity.
-     */
+    /** List of googleAccount Entity. */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<GoogleAccount> googleAccounts;
 
@@ -81,6 +74,7 @@ public class AppUser {
      * Method to add a googleAccount.
      * @param account
      */
+    //TODO RMA by Djer |JavaDoc| Il manque la description du paramètre "account"
     public void adGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);

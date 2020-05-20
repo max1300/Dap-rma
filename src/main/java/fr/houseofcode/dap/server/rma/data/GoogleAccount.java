@@ -7,15 +7,13 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class GoogleAccount {
-    /**
-     * Attribute id of database.
-     */
+    //TODO RMA by Djer |JavaDoc| Il n'est pas utile de préciser que c'est un "attribute"
+    /** Attribute id of database. */
     @Id
     @GeneratedValue
     private Integer id;
-    /**
-     * Attribute for the owner of the account.
-     */
+
+    /** Attribute for the owner of the account.  */
     @ManyToOne
     private AppUser owner;
 
@@ -26,6 +24,7 @@ public class GoogleAccount {
         return id;
     }
 
+    //TODO RMA by Djer |JPA| Evite de laisser le setter, comme c'est un @GeneratedValue, un developpeur pourrait faire des bétise en definissant lui même un ID.
     /**
      * @param mId the id to set
      */
@@ -45,5 +44,6 @@ public class GoogleAccount {
      */
     public void setOwner(final AppUser mOwner) {
         this.owner = mOwner;
+        //TODO RMA by Djer |JPA| Tu devrais faire le "retro-lien" de "owner -> this", si ce lien n'existe pas déja, pour éviter des "bug de synchro" des entitées.
     }
 }

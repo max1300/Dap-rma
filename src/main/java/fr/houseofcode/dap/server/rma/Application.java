@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
  * @author rma
  * 9 juil. 2019
  */
-
 @SpringBootApplication
 public class Application {
 
@@ -37,6 +36,7 @@ public class Application {
      * @param ctx from Spring
      * @return an object from Spring
      */
+    //TODO RMA by Djer |Spring| Cette méthode est utile au début pour vérifier que Spring est bien configuré (affiche le contenu du conteneur IOC). Tu peux la supprimer.
     @Bean
     public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
         return args -> {
