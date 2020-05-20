@@ -30,20 +30,24 @@ import org.apache.logging.log4j.Logger;
  * to google API
  */
 public final class Utils {
+
     /**
-     * LOG4J.
+     * Instance of Logger.
      */
     private static final Logger LOG = LogManager.getLogger();
-    /** The default JSON_FACTORY.*/
+
+    /**
+     * Default JSON_FACTORY.
+     */
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     /**
-     * Constant TOKENS DIRECTORY PATH.
+     * Default TOKENS DIRECTORY PATH.
      */
     private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.home")
                                                             + "\\Dap\\tokens" + File.separator;
     /**
-     * Method getJsonFactory().
+     * Getter to return the JSON_FACTORY.
      * @return constant JSON_FACTORY
      */
     public static JsonFactory getJsonFactory() {

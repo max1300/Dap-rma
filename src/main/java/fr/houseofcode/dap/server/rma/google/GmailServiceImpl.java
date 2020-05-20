@@ -23,26 +23,25 @@ import com.google.api.services.gmail.model.Message;
  * @author rma
  * 5 juil. 2019
  */
-
 @Service
 public  class GmailServiceImpl implements GmailService {
 
     /**
-     * LOG4J.
+     * Instance of Logger.
      */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
      * Internal ApplicationName.
      */
-    private static  String applicationName = "Gmail API Java Quickstart";
+    private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
 
     /**
-     * Getter for constant ApplicationName.
+     * Getter to return the name of the API.
      * @return access to constant ApplicationName.
      */
     public static String getApplicationName() {
-        return applicationName;
+        return APPLICATION_NAME;
     }
 
     /**

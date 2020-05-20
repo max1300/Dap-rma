@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class EmailController {
-    /** Log4J. */
+
+    /**
+     *  Instance of Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
-    /** Object GmailService. */
+    /**
+     Object GmailService.
+     */
     private GmailService gmailService;
 
     public EmailController(final GmailService mGmailService) {
@@ -56,7 +61,7 @@ public class EmailController {
 
 
     /**
-     * Setter of attribute gmailService.
+     * Setter to modify the gmailService.
      * @param mGmailService
      */
     public void setGmailService(final GmailService mGmailService) {

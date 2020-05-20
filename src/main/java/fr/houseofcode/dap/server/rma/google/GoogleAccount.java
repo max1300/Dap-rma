@@ -25,28 +25,27 @@ import com.google.api.client.http.GenericUrl;
 /**
  * @author rma.
  * 5 juil. 2019
- *
  */
 @Controller
 public class GoogleAccount {
 
     /**
-     * LOG4J.
+     * Instance of Logger.
      */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
-     * Attribute of type String that allow to use the literal userkey in the class.
+     * Default value of a User (his name) {@value}.
      */
     private static final String USER_KEY = "userKey";
 
     /**
-     * Constant first char of userKey.
+     * Default first char of UserKey is {@value}.
      */
     private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 
     /**
-     * Constant last char of userKey.
+     * Default last char of UserKey is {@value}.
      */
     private static final int SENSIBLE_DATA_LAST_CHAR = 5;
 
@@ -67,7 +66,7 @@ public class GoogleAccount {
                 + "GeneralSecurityException");
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
-        Credential credential = null;
+        Credential credential;
 
         try {
             flow = Utils.getFlow();

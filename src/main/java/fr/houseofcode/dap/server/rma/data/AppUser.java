@@ -16,14 +16,14 @@ import javax.persistence.OneToMany;
 public class AppUser {
 
     /**
-     * Attribute id of database.
+     * Identifier of a User.
      */
     @Id
     @GeneratedValue
     private Integer id;
 
     /**
-     * Attribute name of database.
+     * Name of a User.
      */
     private String name;
 
@@ -35,6 +35,7 @@ public class AppUser {
     private List<GoogleAccount> googleAccounts;
 
     /**
+     * Getter to return the User's identifier.
      * @return the id
      */
     public Integer getId() {
@@ -42,6 +43,7 @@ public class AppUser {
     }
 
     /**
+     * Setter to modify the User's identifier.
      * @param mId the id to set
      */
     public void setId(final Integer mId) {
@@ -49,6 +51,7 @@ public class AppUser {
     }
 
     /**
+     * Getter to return the User's name.
      * @return the name
      */
     public String getName() {
@@ -56,6 +59,7 @@ public class AppUser {
     }
 
     /**
+     * Setter to modify the User's name.
      * @param mName the name to set
      */
     public void setName(final String mName) {
@@ -63,6 +67,7 @@ public class AppUser {
     }
 
     /**
+     * Getter to return the list of the Google accounts.
      * @return the googleAccounts
      */
     public List<GoogleAccount> getGoogleAccounts() {
@@ -70,7 +75,7 @@ public class AppUser {
     }
 
     /**
-     * Mehtod to modify a googleAccount.
+     * Setter to modify the list of Google accounts.
      * @param mGoogleAccounts the googleAccounts to set.
      */
     public void setGoogleAccounts(final List<GoogleAccount> mGoogleAccounts) {
@@ -78,7 +83,7 @@ public class AppUser {
     }
 
     /**
-     * Method to add a googleAccount.
+     * Adding a Google account in the list of Google accounts.
      * @param account
      */
     public void adGoogleAccount(final GoogleAccount account) {

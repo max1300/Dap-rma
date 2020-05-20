@@ -16,26 +16,30 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 /**
+ *  @author rma.
+ *  5 juil. 2019
  *  class of CalendarService.
  */
-
 @Service
 public  class CalendarService {
+
     /**
-     * LOG4J.
+     * Instance of Logger.
      */
     private static final Logger LOG = LogManager.getLogger();
 
-    /** The internal APPLICATION_NAME.*/
-    private static  String applicationName =
+    /**
+     * Default name of the API.
+     */
+    private static final String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
 
     /**
-     * Getter for constant APPLICATION_NAME.
+     * Getter to return the value of APPLICATION_NAME {@value #APPLICATION_NAME}.
      * @return constant APPLICATION_NAME
      */
     public static String getApplicationName() {
-        return applicationName;
+        return APPLICATION_NAME;
     }
 
     /**
