@@ -35,14 +35,6 @@ public class GoogleAccount {
     }
 
     /**
-     * Setter to modify the account's identifier.
-     * @param mId the id to set
-     */
-    public void setId(final Integer mId) {
-        this.id = mId;
-    }
-
-    /**
      * Getter to return the owner.
      * @return the owner
      */
@@ -55,6 +47,7 @@ public class GoogleAccount {
      * @param mOwner the owner to set
      */
     public void setOwner(final AppUser mOwner) {
+        //pas compris l'histoire du retro lien
         this.owner = mOwner;
     }
 }

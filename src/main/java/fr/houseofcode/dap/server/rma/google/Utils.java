@@ -42,10 +42,16 @@ public final class Utils {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     /**
-     * Default TOKENS DIRECTORY PATH.
+     * Folder to store user credential.
      */
     private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.home")
                                                             + "\\Dap\\tokens" + File.separator;
+
+    /**
+     * Folder to store client secret.
+     */
+    private static final String appClientSecret = System.getProperty("user.home")
+            + "\\Dap\\credentials.json" + File.separator;
     /**
      * Getter to return the JSON_FACTORY.
      * @return constant JSON_FACTORY
@@ -65,8 +71,6 @@ public final class Utils {
      */
     private Utils() {
         throw new IllegalStateException("Utility class");
-
-
     }
 
     /**
@@ -78,11 +82,11 @@ public final class Utils {
     private static GoogleClientSecrets loadClientSecret() throws IOException {
         LOG.debug("Chargement du client secret "
                 + "avec déclenchement possible d'exceptions (IOException)");
+        //Pas compris le fait d'ajouter cela dans le constucteur
         SCOPES.add(CalendarScopes.CALENDAR_READONLY);
         SCOPES.add(GmailScopes.GMAIL_READONLY);
 
-        File appClientSecretFile = new File(System.getProperty("user.home")
-                + "\\Dap\\credentials.json" + File.separator);
+        File appClientSecretFile = new File(appClientSecret);
 
        return GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(new FileInputStream(
                       appClientSecretFile), StandardCharsets.UTF_8));
@@ -97,7 +101,7 @@ public final class Utils {
      */
     static Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
         LOG.debug("Obtention de la credential for userKey : " + userKey);
-        GoogleAuthorizationCodeFlow flow = getFlow();
+        GoogleAuthorizationCodeFlow flow = getFlow(userKey);
         return flow.loadCredential(userKey);
     }
 
@@ -107,12 +111,14 @@ public final class Utils {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    public static GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
-        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur");
+    public static GoogleAuthorizationCodeFlow getFlow(final String userKey) throws IOException, GeneralSecurityException {
+        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur for userKey : " + userKey);
         final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new GoogleAuthorizationCodeFlow.Builder(hTTPTRANSPORT, JSON_FACTORY, loadClientSecret(), SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("online").build();
     }
+
+
 }

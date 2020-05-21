@@ -21,15 +21,15 @@ public class UserController {
 
     /**
      * Constructor for UserController class.
-     * @param mAppUserRepo
+     * @param mAppUserRepo as the respository related to entity AppUser
      */
     public UserController(final AppUserRepository mAppUserRepo) {
         this.appUserRepo = mAppUserRepo;
     }
 
     /**
-     * Find all the user in database.
-     * @return a user from database
+     * Find all the user.
+     * @return a user
      */
     @GetMapping("user/all")
     public Iterable<AppUser> displayAllUsers() {
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     /**
-     * Create a new user in database.
+     * Create a new user.
      * @param name as name of new user
      */
     @GetMapping("user/add")

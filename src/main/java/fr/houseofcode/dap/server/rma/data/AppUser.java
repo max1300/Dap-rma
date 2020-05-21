@@ -84,7 +84,7 @@ public class AppUser {
 
     /**
      * Adding a Google account in the list of Google accounts.
-     * @param account
+     * @param account as the account to add
      */
     public void adGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
