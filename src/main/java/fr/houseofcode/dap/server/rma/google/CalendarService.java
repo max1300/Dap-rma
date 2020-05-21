@@ -15,6 +15,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+//TODO RMA by Djer |JavaDoc| Description pas tr�s utiles "Acces to the Google calendars" serait plus utile.
 /**
  *  @author rma.
  *  5 juil. 2019
@@ -57,6 +58,7 @@ public  class CalendarService {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
+
     public String getNextEvent(final String userKey)
             throws IOException, GeneralSecurityException {
 
@@ -65,8 +67,7 @@ public  class CalendarService {
 
         String str = "No upcoming events found.";
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = getCalendarService(userKey).events()
-                .list("primary").setMaxResults(1).setTimeMin(now)
+        Events events = getCalendarService(userKey).events().list("primary").setMaxResults(1).setTimeMin(now)
                 .setOrderBy("startTime").setSingleEvents(true).execute();
 
         List<Event> items = events.getItems();
@@ -78,6 +79,7 @@ public  class CalendarService {
                     start = event.getStart().getDate();
                     endEvent = event.getEnd().getDate();
                 }
+
                 str = event.getSummary() + start + endEvent;
             }
         }

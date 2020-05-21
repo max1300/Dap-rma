@@ -46,6 +46,7 @@
 			<version>1.23.0</version>
 		</dependency>
 		
+		<!-- TODO RMA by Djer |Maven| Cette dépendance n'est plus utile depuis qu'on utilise le mode "serveur" pour se conencter a Googel (c'etait utile quand on utilisait le mode "client installé") -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -115,6 +116,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<!-- TODO RMA by Djer |Maven| Evite de repeter la version, Si jamais tu changes la version du "parent" cette dépendance restera dans une "ancienne" version ce qui risque de te poser des problèmes. -->
 			<version>2.1.6.RELEASE</version>
 		</dependency>
 
@@ -175,6 +177,7 @@
 
 	</build>
 
+
 	<reporting>
 		<plugins>
 			<plugin>
@@ -212,5 +215,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
 
 </project>

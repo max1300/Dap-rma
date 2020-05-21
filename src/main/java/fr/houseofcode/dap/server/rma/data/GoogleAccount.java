@@ -34,6 +34,7 @@ public class GoogleAccount {
         return id;
     }
 
+    //TODO RMA by Djer |JPA| Evite de laisser le setter, comme c'est un @GeneratedValue, un developpeur pourrait faire des b�tise en definissant lui m�me un ID.
     /**
      * Getter to return the owner.
      * @return the owner
@@ -49,5 +50,6 @@ public class GoogleAccount {
     public void setOwner(final AppUser mOwner) {
         //pas compris l'histoire du retro lien
         this.owner = mOwner;
+        //TODO RMA by Djer |JPA| Tu devrais faire le "retro-lien" de "owner -> this", si ce lien n'existe pas d�ja, pour �viter des "bug de synchro" des entit�es.
     }
 }

@@ -18,20 +18,18 @@ import fr.houseofcode.dap.server.rma.google.CalendarService;
 @RestController
 public class EventController {
 
-    /**
-     * Instance of Logger to use in class.
-     */
+    //TODO RMA by Djer |JavaDoc| Il est courrant décrire la javaDoc des "attributs" sur une seul ligne (car souvent ils n'ont aucun paramètres). Je t'ai fait la modification pour l'exemple.
+    /** Instance of Logger to use in class. */
     private static final Logger LOG = LogManager.getLogger();
 
-    /**
-     * Object CalendarService.
-     */
+    /** Object CalendarService. */
     private CalendarService calendarService;
 
     /**
      * Constructor for eventController class.
      * @param mCalendarService
      */
+    //TODO RMA by Djer |JavaDoc| Il manque la description du paramètre "mCalendarService"
     public EventController(final CalendarService mCalendarService) {
         this.calendarService = mCalendarService;
     }
@@ -45,6 +43,7 @@ public class EventController {
      */
     @GetMapping("/event/next")
     public String displayNextEvent(@RequestParam final String userKey) throws IOException, GeneralSecurityException {
+        //TODO RMA by Djer |JavaDoc| Contextualise tes messages de log. "... for userKey : " + userKey.
         LOG.info("recuperation des next events");
         return calendarService.getNextEvent(userKey);
     }

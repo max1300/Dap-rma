@@ -27,10 +27,7 @@ public class AppUser {
      */
     private String name;
 
-
-    /**
-     * List of googleAccount Entity.
-     */
+    /** List of googleAccount Entity. */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<GoogleAccount> googleAccounts;
 
@@ -86,6 +83,7 @@ public class AppUser {
      * Adding a Google account in the list of Google accounts.
      * @param account as the account to add
      */
+    //TODO RMA by Djer |JavaDoc| Il manque la description du param�tre "account"
     public void adGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);

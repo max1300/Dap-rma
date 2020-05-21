@@ -24,8 +24,7 @@ import com.google.api.services.gmail.model.Message;
  * 5 juil. 2019
  */
 @Service
-public  class GmailServiceImpl implements GmailService {
-
+public class GmailServiceImpl implements GmailService {
     /**
      * Instance of Logger.
      */
@@ -36,7 +35,6 @@ public  class GmailServiceImpl implements GmailService {
      */
     private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
 
-
     /**
      * Secure connection to GmailService.
      * @return a instance of Gmail
@@ -44,6 +42,7 @@ public  class GmailServiceImpl implements GmailService {
      * @throws GeneralSecurityException exception
      * @throws IOException exception
      */
+
     private Gmail getGmailService(final String userKey)
             throws GeneralSecurityException, IOException {
         LOG.debug("connexion au service Gmail for userKey : " + userKey);
@@ -54,13 +53,13 @@ public  class GmailServiceImpl implements GmailService {
                 .build();
     }
 
-
     /**
      *  @param userKey type String
      * @return String containing list of labels
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
+    @Override
     @GetMapping("/labels")
     public String getLabels(final String userKey) throws IOException, GeneralSecurityException {
         LOG.debug("recuperation des labels for userKey : " + userKey);
@@ -88,6 +87,7 @@ public  class GmailServiceImpl implements GmailService {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
+    @Override
     public int getNbUnreadEmail(final String userKey) throws IOException, GeneralSecurityException {
         LOG.info("Searching number of unread email in mailbox of userKey : " + userKey);
         ListMessagesResponse response = getGmailService(userKey)
@@ -101,7 +101,7 @@ public  class GmailServiceImpl implements GmailService {
             if (response.getNextPageToken() != null) {
                 String pageToken = response.getNextPageToken();
                 response = getGmailService(userKey).users().messages().list("me").setQ("is:unread")
-                            .setPageToken(pageToken).execute();
+                        .setPageToken(pageToken).execute();
             } else {
                 break;
             }

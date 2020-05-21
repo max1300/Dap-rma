@@ -9,6 +9,9 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
@@ -19,18 +22,14 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
+ * class utils : tools to load correctly the access to google API.
+ * 
  * @author rma
  * 5 juil. 2019
- * class utils :
- * tools to load correctly the access
- * to google API
  */
 public final class Utils {
-
     /**
      * Instance of Logger.
      */
@@ -52,6 +51,7 @@ public final class Utils {
      */
     private static final String appClientSecret = System.getProperty("user.home")
             + "\\Dap\\credentials.json" + File.separator;
+  
     /**
      * Getter to return the JSON_FACTORY.
      * @return constant JSON_FACTORY
@@ -88,8 +88,8 @@ public final class Utils {
 
         File appClientSecretFile = new File(appClientSecret);
 
-       return GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(new FileInputStream(
-                      appClientSecretFile), StandardCharsets.UTF_8));
+        return GoogleClientSecrets.load(JSON_FACTORY,
+                new InputStreamReader(new FileInputStream(appClientSecretFile), StandardCharsets.UTF_8));
     }
 
     /**

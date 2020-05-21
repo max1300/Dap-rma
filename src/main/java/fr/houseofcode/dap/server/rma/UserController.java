@@ -1,11 +1,11 @@
 package fr.houseofcode.dap.server.rma;
 
-
-import fr.houseofcode.dap.server.rma.data.AppUser;
-import fr.houseofcode.dap.server.rma.data.AppUserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import fr.houseofcode.dap.server.rma.data.AppUser;
+import fr.houseofcode.dap.server.rma.data.AppUserRepository;
 
 /**
  * @author rma.
@@ -23,6 +23,7 @@ public class UserController {
      * Constructor for UserController class.
      * @param mAppUserRepo as the respository related to entity AppUser
      */
+    //TODO RMA by Djer |JavaDoc| Il manque la description du param�tre "mAppUserRepo"
     public UserController(final AppUserRepository mAppUserRepo) {
         this.appUserRepo = mAppUserRepo;
     }
@@ -36,6 +37,7 @@ public class UserController {
         return appUserRepo.findAll();
     }
 
+    //TODO RMA by Djer |JavaDoc| Parler de BDD dans un Controller est maladroit (cela pourrait changer et cette JavaDoc deviendrait faux)
     /**
      * Create a new user.
      * @param name as name of new user
