@@ -17,7 +17,9 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
 
-    /** Log4J. */
+    /**
+     * Instance of Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
     /**

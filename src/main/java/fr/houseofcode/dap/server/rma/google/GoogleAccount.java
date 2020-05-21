@@ -25,21 +25,27 @@ import com.google.api.client.http.GenericUrl;
 /**
  * @author rma.
  * 5 juil. 2019
- *
  */
 @Controller
 public class GoogleAccount {
-
-    /** LOG4J. */
+    /**
+     * Instance of Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
-    /** Attribute of type String that allow to use the literal userkey in the class. */
+    /**
+     * Default value of a User (his name) {@value}.
+     */
     private static final String USER_KEY = "userKey";
 
-    /** Constant first char of userKey. */
+    /**
+     * Default first char of UserKey is {@value}.
+     */
     private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 
-    /** Constant last char of userKey. */
+    /**
+     * Default last char of UserKey is {@value}.
+     */
     private static final int SENSIBLE_DATA_LAST_CHAR = 5;
 
     /**
@@ -54,12 +60,11 @@ public class GoogleAccount {
      */
     @GetMapping("/account/add/{userKey}")
     public String addAccount(@PathVariable final String userKey, final HttpServletRequest request,
-            final HttpSession session) throws GeneralSecurityException {
-        //TODO RMA by Djer |Log4J| Contextualise tes messages de log. "... for userKey : " + userKey.
-        LOG.debug("Ajout d'un compte google avec déclenchement possible d'exception :" + "GeneralSecurityException");
+                             final HttpSession session) throws  GeneralSecurityException {
+        LOG.debug("Ajout d'un compte google for userKey : " + userKey);
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
-        Credential credential = null;
+        Credential credential;
 
         try {
             flow = Utils.getFlow();
@@ -129,8 +134,7 @@ public class GoogleAccount {
      * @throws ServletException if no User Id in session
      */
     private String getuserKey(final HttpSession session) throws ServletException {
-        //TODO RMA by Djer |Log4J| "Retrieve the User ID in Session." serait plus claire (il s'agit de la description JavaDoc de la m�thode....)
-        LOG.debug("Accès à la userkey avec déclenchement possible d'exceptions (ServletException)");
+        LOG.debug("Retrouve l'id du user en session avec possible exception (ServletException)");
         String userKey = null;
 
         if (null != session && null != session.getAttribute(USER_KEY)) {
@@ -152,10 +156,11 @@ public class GoogleAccount {
      * @throws ServletException if the code cannot be decoded
      */
     private String extracCode(final HttpServletRequest request) throws ServletException {
-        //TODO RMA by Djer |Log4J| "Extract OAuth2 Google code (from URL) and decode it." serait plus claire (il s'agit de la description JavaDoc de la m�thode....)
-        LOG.debug("Extractio code google Auth2" + " avec déclenchement possible " + "d'exceptions (ServletException)");
-        StringBuffer buf = request.getRequestURL();
-
+        LOG.debug("Extract OAuth2 Google code (from URL) and decode it"
+                 + " avec déclenchement possible "
+                 + "d'exceptions (ServletException)");
+         StringBuffer buf = request.getRequestURL();
+      
         if (null != request.getQueryString()) {
             buf.append('?').append(request.getQueryString());
         }
@@ -183,8 +188,7 @@ public class GoogleAccount {
      * @return an absolute URI
      */
     protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
-        //TODO RMA by Djer |Log4J| Serait mieu en "debug", je ne pense pas qu'une "utilisateur avanc�" comprenne ce message.
-        LOG.info("building redirect URI for authorization");
+        LOG.debug("building redirect URI for authorization");
         GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
         return url.build();

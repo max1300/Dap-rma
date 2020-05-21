@@ -30,19 +30,30 @@ import com.google.api.services.gmail.GmailScopes;
  * 5 juil. 2019
  */
 public final class Utils {
-    /** LOG4J. */
+    /**
+     * Instance of Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
-    /** The default JSON_FACTORY.*/
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
-    //TODO RMA by Djer |Log4J| "Folder to store user credentials" serait plus claire.
-    //TODO RMA by Djer |POO| Utilise "System.getProperty(\"user.home\")" y compris pour les sous-dossiers
-    /** Constant TOKENS DIRECTORY PATH. */
-    private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.home") + "\\Dap\\tokens"
-            + File.separator;
 
     /**
-     * Method getJsonFactory().
+     * Default JSON_FACTORY.
+     */
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+    /**
+     * Folder to store user credential.
+     */
+    private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.home")
+                                                            + "\\Dap\\tokens" + File.separator;
+
+    /**
+     * Folder to store client secret.
+     */
+    private static final String appClientSecret = System.getProperty("user.home")
+            + "\\Dap\\credentials.json" + File.separator;
+  
+    /**
+     * Getter to return the JSON_FACTORY.
      * @return constant JSON_FACTORY
      */
     public static JsonFactory getJsonFactory() {
@@ -55,7 +66,9 @@ public final class Utils {
      */
     private static final List<String> SCOPES = new ArrayList<>();
 
-    //TODO RMA by Djer |JavaDoc| Commentaire javaDoc manquant
+    /**
+     * Constructor of class Utils
+     */
     private Utils() {
         throw new IllegalStateException("Utility class");
     }
@@ -67,15 +80,13 @@ public final class Utils {
      * @throws GeneralSecurityException exception
      */
     private static GoogleClientSecrets loadClientSecret() throws IOException {
-        LOG.debug("Chargement du client secret " + "avec dÃ©clenchement possible d'exceptions (IOException)");
-        //TODO RMA by Djer |POO| Evite d'ajouter les autorisations à demander dans cette méthode. Deux entrée seront ajouter dans la liste à chaque appel de la méthode. Fait cette action dans le construteur, comme ca il ne serat fait qu'une seul fois.
+        LOG.debug("Chargement du client secret "
+                + "avec dÃ©clenchement possible d'exceptions (IOException)");
+        //Pas compris le fait d'ajouter cela dans le constucteur
         SCOPES.add(CalendarScopes.CALENDAR_READONLY);
         SCOPES.add(GmailScopes.GMAIL_READONLY);
 
-        //TODO RMA by Djer |POO| "System.getProperty("user.home") + "\\Dap\\credentials.json" + File.separator)" devrait être en constante.
-        //TODO RMA by Djer |POO| Utilise "System.getProperty(\"user.home\")" y compris pour les sous-dossiers
-        File appClientSecretFile = new File(
-                System.getProperty("user.home") + "\\Dap\\credentials.json" + File.separator);
+        File appClientSecretFile = new File(appClientSecret);
 
         return GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(new FileInputStream(appClientSecretFile), StandardCharsets.UTF_8));
@@ -89,9 +100,8 @@ public final class Utils {
      * @throws GeneralSecurityException exception
      */
     static Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
-        LOG.debug("Obtention de la credential " + "avec dÃ©clenchement possible d'exceptions (IOException "
-                + "ou GeneralSecurityException");
-        GoogleAuthorizationCodeFlow flow = getFlow();
+        LOG.debug("Obtention de la credential for userKey : " + userKey);
+        GoogleAuthorizationCodeFlow flow = getFlow(userKey);
         return flow.loadCredential(userKey);
     }
 
@@ -101,16 +111,14 @@ public final class Utils {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    public static GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
-        //TODO RMA by Djer |Log4J| Contextualise tes messages de log. "... for userKey : " + userKey.
-        //TODO RMA by Djer |Log4J| Evite d'iniquer les exception potentiellement lévée. Si une exception est levé, la personne lisant la log la verra très bien ! 
-        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur "
-                + "avec dÃ©clenchement possible d'exceptions (IOException " + "ou GeneralSecurityException");
+    public static GoogleAuthorizationCodeFlow getFlow(final String userKey) throws IOException, GeneralSecurityException {
+        LOG.debug("Flow et trigger pour requete d'authorisation de l'utilisateur for userKey : " + userKey);
         final NetHttpTransport hTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new GoogleAuthorizationCodeFlow.Builder(hTTPTRANSPORT, JSON_FACTORY, loadClientSecret(), SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("online").build();
     }
+
 
 }

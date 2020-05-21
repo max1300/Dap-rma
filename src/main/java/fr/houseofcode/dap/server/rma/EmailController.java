@@ -17,10 +17,15 @@ import fr.houseofcode.dap.server.rma.google.GmailService;
  */
 @RestController
 public class EmailController {
-    /** Log4J. */
+
+    /**
+     *  Instance of Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
-    /** Object GmailService. */
+    /**
+     Object GmailService.
+     */
     private GmailService gmailService;
 
     //TODO RMA by Djer |JavaDoc| Il manque la JavaDoc de ton constructeur (description, paramètres)
@@ -58,7 +63,7 @@ public class EmailController {
     }
 
     /**
-     * Setter of attribute gmailService.
+     * Setter to modify the gmailService.
      * @param mGmailService
      */
     //TODO RMA by Djer |JavaDoc| Il manque la description du paramètre "mGmailService".

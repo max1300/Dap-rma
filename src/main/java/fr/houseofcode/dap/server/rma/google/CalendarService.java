@@ -15,28 +15,25 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
-//TODO RMA by Djer |JavaDoc| Description pas très utiles "Acces to the Google calendars" serait plus utile.
+//TODO RMA by Djer |JavaDoc| Description pas trï¿½s utiles "Acces to the Google calendars" serait plus utile.
 /**
- *  class of CalendarService.
+ *  @author rma.
+ *  5 juil. 2019
+ *  Acces to the Google Calendar Api.
  */
 @Service
-public class CalendarService {
-    /** LOG4J. */
+public  class CalendarService {
+
+    /**
+     * Instance of Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
 
-    //TODO RMA by Djer |POO| Devraient être une constante (il manque "final") et écrit en majuscules.
-    /** The internal APPLICATION_NAME.*/
-    private static String applicationName = "Google Calendar API Java Quickstart";
-
-    //TODO RMA by Djer |POO| attention à l'ordre. ordre attendu : Constantes, attributs, initialisateurs statics, constrcuteurs, méthodes métier, méthodes "utilitaires" (toString, hashCode,...) getter/setter, (éventuellement classes internes).
-    //TODO RMA by Djer |POO| Ce getter n'est appelé QUE dans cette classe. Pour les constantent on y acès en générale directement (sans getter/setters). Si tu souhaites garder ce getter, il devrait être **private**
     /**
-     * Getter for constant APPLICATION_NAME.
-     * @return constant APPLICATION_NAME
+     * Default name of the API.
      */
-    public static String getApplicationName() {
-        return applicationName;
-    }
+    private static final String APPLICATION_NAME =
+            "Google Calendar API Java Quickstart";
 
     /**
      * Access to services of Google Calendar.
@@ -46,13 +43,12 @@ public class CalendarService {
      * @throws IOException exception
      */
     private static Calendar getCalendarService(final String userKey) throws GeneralSecurityException, IOException {
-        //TODO RMA by Djer |Log4J| Contextualise tes messages de log. "for userKey : " + userKey.
-        //TODO RMA by Djer |Log4J| Il n'est pas très utile d'indiquer que la méthode peut lever des exceptions dans la log. Si une execption était levée, la personne lisant la log le verra très bien.
-        LOG.debug("recuperation d'un acces au service Google calendar"
-                + " avec dÃ©clenchement possible d'exceptions (IOException " + "ou GeneralSecurityException");
+        LOG.debug("recuperation d'un acces au service Google calendar for userKey : "
+                + userKey);
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         return new Calendar.Builder(httpTransport, Utils.getJsonFactory(), Utils.getCredentials(userKey))
-                .setApplicationName(CalendarService.getApplicationName()).build();
+                .setApplicationName(CalendarService.APPLICATION_NAME)
+                .build();
     }
 
     /**
@@ -62,12 +58,12 @@ public class CalendarService {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    public String getNextEvent(final String userKey) throws IOException, GeneralSecurityException {
-        //TODO RMA by Djer |POO| Ce commentaire est devenu obsolète.
-        // Build a new authorized API client service.
 
-        LOG.debug("recuperation du prochain event Google calendar"
-                + " avec dÃ©clenchement possible d'exceptions (IOException " + "ou GeneralSecurityException");
+    public String getNextEvent(final String userKey)
+            throws IOException, GeneralSecurityException {
+
+        LOG.debug("recuperation du prochain event Google calendar for userKey : "
+                + userKey);
 
         String str = "No upcoming events found.";
         DateTime now = new DateTime(System.currentTimeMillis());
@@ -83,9 +79,8 @@ public class CalendarService {
                     start = event.getStart().getDate();
                     endEvent = event.getEnd().getDate();
                 }
-                //TODO RMA by Djer |MVC| Ne formate pas les messages sur le serveur d'une API REST. Renvoie les données et laisse le client (ou thymeLeaf) effectuer le formatage.
-                str = "Evenement Ã  venir =" + " " + event.getSummary() + " pour le : " + start
-                        + " et fin de l'evenement pour le : " + endEvent;
+
+                str = event.getSummary() + start + endEvent;
             }
         }
         return str;
